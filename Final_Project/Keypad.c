@@ -17,6 +17,7 @@
 #include "../inc/tm4c123gh6pm.h"
 #include "../inc/CortexM.h"
 #include "Keypad.h"
+#include "Lab5.h"
 
 const char keypadMatrix[4][3] = {
     {'1', '2', '3'},
@@ -100,7 +101,6 @@ char scanColumns(int row){
 	else if(GPIO_PORTB_RIS_R & 0x04) { // PB2
 		return keypadMatrix[row-1][2];
 	}
-	
 	return '\0';
 }
 
@@ -121,13 +121,12 @@ char scan(void) {
 	else if(GPIO_PORTB_RIS_R & 0x08) { // PB3
 		return scanColumns(4);
 	}
-	
 	return '\0';
 }
 
 void GPIOPortB_Handler(void) {
 	GPIO_PORTB_IM_R &= ~0x7F;
-	scan();
+	recordKey(scan());
 	Timer0A_Init();
 }
 

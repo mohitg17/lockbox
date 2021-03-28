@@ -18,6 +18,14 @@
 #include "Switch.h" 
 #include "Music.h" 
 #include "Keypad.h"
+#include "Lab5.h"
+
+char key;
+
+void recordKey(char k){
+	key = k;
+}
+
 
 int main(void) { 
   PLL_Init(Bus80MHz);              // bus clock at 80 MHz
@@ -33,6 +41,7 @@ int main(void) {
   EnableInterrupts();
 
   while(1){
-    WaitForInterrupt();
+    ST7735_SetCursor(0,0);
+		ST7735_OutChar(key);
   }
 }
