@@ -21,9 +21,11 @@
 #include "Lab5.h"
 
 char key;
+uint8_t updateDisplayNeeded = 0;
 
 void recordKey(char k){
 	key = k;
+	updateDisplayNeeded = 1;
 }
 
 
@@ -41,7 +43,10 @@ int main(void) {
   EnableInterrupts();
 
   while(1){
-    ST7735_SetCursor(0,0);
-		ST7735_OutChar(key);
+    if(updateDisplayNeeded){
+			ST7735_SetCursor(0,0);
+			ST7735_OutChar(key);
+			updateDisplayNeeded = 0;
+		}
   }
 }
