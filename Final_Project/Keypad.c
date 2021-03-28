@@ -16,6 +16,15 @@
 #include <stdint.h>
 #include "../inc/tm4c123gh6pm.h"
 #include "../inc/CortexM.h"
+#include "Keypad.h"
+
+const char keypadMatrix[4][3] = {
+    {'1', '2', '3'},
+		{'4', '5', '6'},
+		{'7', '8', '9'},
+    {'*', '0', '#'}
+};
+
 
 void GPIOArm(void){
   GPIO_PORTB_ICR_R = 0x7F;      // (e) clear flag
@@ -78,23 +87,42 @@ void Timer0A_Handler(void){
   GPIOArm(); 
 }
 
+char scanColumns(int row){
+	// Col 1
+	if(GPIO_PORTB_RIS_R & 0x10) { // PB4
+		return keypadMatrix[row-1][0];
+	}
+	// Col 2
+	else if(GPIO_PORTB_RIS_R & 0x40) { // PB6
+		return keypadMatrix[row-1][1];
+	}
+	// Col 3
+	else if(GPIO_PORTB_RIS_R & 0x04) { // PB2
+		return keypadMatrix[row-1][2];
+	}
+	
+	return '\0';
+}
+
 char scan(void) {
-	if(GPIO_PORTB_RIS_R & 0x80) {    // if SW5 pressed, change mode
-		GPIO_PORTB_IM_R &= ~0x80;
+	// Row 1
+	if(GPIO_PORTB_RIS_R & 0x20) { // PB5
+		return scanColumns(1);
 	}
-	if(GPIO_PORTB_RIS_R & 0x04) {    // if SW4 pressed, set alarm
-		GPIO_PORTB_IM_R &= ~0x04;
+	// Row 2
+	else if(GPIO_PORTB_RIS_R & 0x01) { // PB0
+		return scanColumns(2);
 	}
-	if(GPIO_PORTB_RIS_R & 0x20) {    // if SW3 pressed, increment minute
-		GPIO_PORTB_IM_R &= ~0x20;
+	// Row 3
+	else if(GPIO_PORTB_RIS_R & 0x02) { // PB1
+		return scanColumns(3);
 	}
-	if(GPIO_PORTB_RIS_R & 0x10) {    // if SW2 pressed, increment hour
-		GPIO_PORTB_IM_R &= ~0x10;
+	// Row 4
+	else if(GPIO_PORTB_RIS_R & 0x08) { // PB3
+		return scanColumns(4);
 	}
-	if(GPIO_PORTB_RIS_R & 0x08) {    // if SW1 pressed, turn off alarm or start stopwatch
-		GPIO_PORTB_IM_R &= ~0x08;
-	}
-	                // one-shot timer initialization for debouncing
+	
+	return '\0';
 }
 
 void GPIOPortB_Handler(void) {
@@ -102,3 +130,4 @@ void GPIOPortB_Handler(void) {
 	scan();
 	Timer0A_Init();
 }
+

@@ -17,7 +17,7 @@
 #include "DAC.h"
 #include "Switch.h" 
 #include "Music.h" 
-
+#include "Keypad.h"
 
 int main(void) { 
   PLL_Init(Bus80MHz);              // bus clock at 80 MHz
