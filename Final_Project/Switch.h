@@ -34,15 +34,6 @@
 //===============================
 static void Timer0Arm(void);
 
-//==========================================
-// Timer0A_Handler
-//------------------------------------------
-// Interrupt 10 ms after rising edge of PF4
-// inputs: none
-// outputs: none
-//==========================================
-void Timer0A_Handler(void);
-
 //==========================
 // PORT C Initialization 
 //==========================

@@ -145,25 +145,6 @@ static void Timer0Arm(void){
   TIMER0_CTL_R = 0x00000001;    // 10) enable TIMER0A
 }
 
-//==========================================
-// Timer0A_Handler
-//------------------------------------------
-// Interrupt 10 ms after rising edge of
-// switches (PF0, PF4, PC4)
-// inputs: none
-// outputs: none
-//==========================================
-void Timer0A_Handler(void){
-  TIMER0_IMR_R = 0x00000000;    // disarm timeout interrupt
-	
-	lastF0 = PF0;  // switch state
-	lastF4 = PF4;  // switch state
-	
-	lastC4 = PC4;
-	
-  GPIOFArm();   // start GPIO
-	GPIOCArm(); 
-}
 
 
 //==========================================
