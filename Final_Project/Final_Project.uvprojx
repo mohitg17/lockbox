@@ -453,6 +453,16 @@
               <FileType>5</FileType>
               <FilePath>..\inc\Texas.h</FilePath>
             </File>
+            <File>
+              <FileName>TestSpeaker.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\TestSpeaker.c</FilePath>
+            </File>
+            <File>
+              <FileName>TestSpeaker.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\TestSpeaker.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
