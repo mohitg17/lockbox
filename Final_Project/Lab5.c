@@ -17,6 +17,18 @@
 #include "DAC.h"
 #include "Switch.h" 
 #include "Music.h" 
+#include "Keypad.h"
+#include "Lab5.h"
+
+#include "TestSpeaker.h"
+
+char key;
+uint8_t updateDisplayNeeded = 0;
+
+void recordKey(char k){
+	key = k;
+	updateDisplayNeeded = 1;
+}
 
 
 int main(void) { 
@@ -30,9 +42,16 @@ int main(void) {
 	DAC_Init(0x07FF); 							 // init DAC
 	Music_Init();
 	
+	Test_Speaker_Init(); 							// test speaker
+	
   EnableInterrupts();
 
   while(1){
-    WaitForInterrupt();
+    if(updateDisplayNeeded){
+			ST7735_SetCursor(0,0);
+			ST7735_OutChar(key);
+			updateDisplayNeeded = 0;
+		}
+		
   }
 }

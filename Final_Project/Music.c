@@ -341,7 +341,7 @@ void SysTick_Init(uint32_t period) {
 // inputs: none
 // outputs: none
 //==========================================
-void SysTick_Handler(void){
+void SysTick_Handler2(void){
 	PF1 = 2; 
 	
 	melodyBeats++;													// keeps track of how long current note has been held
@@ -550,3 +550,9 @@ void Timer2A_Stop(void){
 void Timer2A_ChangePeriod(uint32_t note) {
 	TIMER2_TAILR_R = note; 
 }
+
+
+
+
+
+
