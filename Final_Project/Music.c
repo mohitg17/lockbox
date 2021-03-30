@@ -1,10 +1,10 @@
 // Music.c
-// Amy Lee
+// Amy Lee, Hans Robles, Mohit Gupta, Zander Tedjo
 // 03/08/21
 // Contains music function implementations and song definitions
-// Lab 5
+// Final Project
 // Blake Margolis
-// 03/11/21
+// 03/29/21
 
 #include <stdint.h>
 #include "../inc/tm4c123gh6pm.h"

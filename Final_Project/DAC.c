@@ -1,10 +1,10 @@
 // DAC.c
-// Amy Lee
+// Amy Lee, Hans Robles, Mohit Gupta, Zander Tedjo
 // 03/06/21
 // Contains DAC function implementations
-// Lab 5
+// Final Project
 // Blake Margolis
-// 03/11/21
+// 03/29/21
 
 #include <stdint.h>
 #include "../inc/ADCSWTrigger.h"

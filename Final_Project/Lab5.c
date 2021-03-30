@@ -1,10 +1,10 @@
 // Lab5.c
-// Amy Lee
+// Amy Lee, Hans Robles, Mohit Gupta, Zander Tedjo
 // 03/06/21
 // Contains main program that inits music player
-// Lab 5
+// Final Project
 // Blake Margolis
-// 03/08/21
+// 03/29/21
 
 #include <stdint.h>
 #include "../inc/tm4c123gh6pm.h"
