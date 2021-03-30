@@ -19,6 +19,7 @@
 #include "Music.h" 
 #include "Keypad.h"
 #include "Lab5.h"
+#include "LED.h"
 
 #include "TestSpeaker.h"
 
