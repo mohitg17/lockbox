@@ -22,7 +22,7 @@ void GPIOPortE_Init(void){
 	GPIO_PORTE_AFSEL_R &= ~0x03; // disable alt funct on PE3,1,0
 	GPIO_PORTE_DEN_R |= 0x03; // enable digital I/O on PE3,1,0
 
-	GPIO_PORTE_PCTL_R = (GPIO_PORTE_PCTL_R & 0xFFFF0F00);
+	GPIO_PORTE_PCTL_R = (GPIO_PORTE_PCTL_R & 0xFFFFFF00);		//regular GPIO, clear wanted bits
 }
 
 void LED_Init(void){

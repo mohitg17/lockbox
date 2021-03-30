@@ -15,11 +15,11 @@
 #include "../inc/TExaS.h" 
 
 #include "DAC.h"
-#include "Switch.h" 
 #include "Music.h" 
 #include "Keypad.h"
 #include "Lab5.h"
 #include "LED.h"
+#include "Motor.h"
 
 #include "TestSpeaker.h"
 
@@ -37,8 +37,6 @@ int main(void) {
 	TExaS_Init(SCOPE_PD2,80000000); 	
 
 	ST7735_InitR(INITR_REDTAB); 		 // init LCD
-	Port_F_Init();									 // init play/pause, rewind switches
-	Port_C_Init();									 // init change instrument switch
 	Port_D_Init(); 									 // init DAC pin
 	DAC_Init(0x07FF); 							 // init DAC
 	Music_Init();
