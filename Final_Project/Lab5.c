@@ -37,7 +37,7 @@ int main(void) {
 	TExaS_Init(SCOPE_PD2,80000000); 	
 
 	ST7735_InitR(INITR_REDTAB); 		 // init LCD
-	Port_D_Init(); 									 // init DAC pin
+	GPIOPortD_Init(); 							 // init DAC pin
 	DAC_Init(0x07FF); 							 // init DAC
 	Music_Init();
 	

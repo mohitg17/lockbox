@@ -21,7 +21,7 @@
 // PD1 = SSI1_FS/CS (to TLV5616)
 // PD0 = SSI1_SCK (to TLV5616)
 //--------------------------
-void Port_D_Init(void);
+void GPIOPortD_Init(void);
 
 //==========================
 // DAC_Init

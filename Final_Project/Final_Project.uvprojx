@@ -463,6 +463,36 @@
               <FileType>5</FileType>
               <FilePath>.\TestSpeaker.h</FilePath>
             </File>
+            <File>
+              <FileName>Keypad.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\Documents\GitHub\final_project_ahl672_mg58629_zbt86_hrr592\Final_Project\Keypad.c</FilePath>
+            </File>
+            <File>
+              <FileName>Keypad.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\..\Documents\GitHub\final_project_ahl672_mg58629_zbt86_hrr592\Final_Project\Keypad.h</FilePath>
+            </File>
+            <File>
+              <FileName>Motor.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\Documents\GitHub\final_project_ahl672_mg58629_zbt86_hrr592\Final_Project\Motor.c</FilePath>
+            </File>
+            <File>
+              <FileName>Motor.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\..\Documents\GitHub\final_project_ahl672_mg58629_zbt86_hrr592\Final_Project\Motor.h</FilePath>
+            </File>
+            <File>
+              <FileName>LED.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\Documents\GitHub\final_project_ahl672_mg58629_zbt86_hrr592\Final_Project\LED.c</FilePath>
+            </File>
+            <File>
+              <FileName>LED.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\..\Documents\GitHub\final_project_ahl672_mg58629_zbt86_hrr592\Final_Project\LED.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
