@@ -21,6 +21,7 @@
 #include "LED.h"
 #include "Motor.h"
 
+#include "TestMotor.h"
 #include "TestSpeaker.h"
 
 char key;
@@ -42,6 +43,7 @@ int main(void) {
 	Music_Init();
 	
 	Test_Speaker_Init(); 							// test speaker
+	MotorTest();
 	
   EnableInterrupts();
 
