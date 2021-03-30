@@ -1,5 +1,5 @@
 // Lab5.h
-// Amy Lee
+// Amy Lee, Hans Robles, Mohit Gupta, Zander Tedjo
 // 03/06/21
 // Main functions
 // Final Project

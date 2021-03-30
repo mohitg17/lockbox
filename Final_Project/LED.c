@@ -1,5 +1,5 @@
 // LED.c
-// Amy Lee
+// Amy Lee, Hans Robles, Mohit Gupta, Zander Tedjo
 // 03/06/21
 // LED initializations and data function implementations 
 // Final Project

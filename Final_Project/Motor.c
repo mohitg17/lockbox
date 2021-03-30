@@ -1,5 +1,5 @@
 // Motor.c
-// Amy Lee
+// Amy Lee, Hans Robles, Mohit Gupta, Zander Tedjo
 // 03/06/21
 // Motor initializations and data function implementations 
 // Final Project
