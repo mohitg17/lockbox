@@ -29,11 +29,11 @@ void Motor_Init(void){
 	GPIOPortC_Init();
 }
 
-void Motor_Run(void){
+void Motor_Lock(void){
 	
 }
 
-void Motor_Stop(void){
+void Motor_Unlock(void){
 	
 }
 
