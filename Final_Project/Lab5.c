@@ -41,6 +41,8 @@ uint8_t updateDisplayNeeded = 1;
 uint8_t clearScreenNeeded = 1;
 
 char key;
+uint8_t totalDigits = 4;
+uint8_t currentDigit;
 
 
 
@@ -73,7 +75,7 @@ void drawTitle(void){
 void drawCode(uint32_t c){
 	uint32_t localCode = c;
 	
-	ST7735_SetCursor(7,6);
+	ST7735_SetCursor(9,6);
 
 	char str[10];
 	sprintf(str, "%d", localCode);						// convert numbers to strings for display
@@ -84,8 +86,7 @@ void drawCode(uint32_t c){
 void drawLockScreen(){
 	drawTitle();
 
-	ST7735_DrawString(5,5,"Enter Code:",ST7735_YELLOW);
-
+	ST7735_DrawString(6,5,"Enter Code:",ST7735_YELLOW);
 	drawCode(enteredCode);
 }
 
@@ -135,7 +136,7 @@ int main(void) {
 		}
 		
 		else{
-			
+			char enteredKey = scanKeypad();	//blocking
 		}
 		
   }

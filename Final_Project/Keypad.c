@@ -130,3 +130,8 @@ void GPIOPortB_Handler(void) {
 	Timer0A_Init();
 }
 
+
+char scanKeypad(void){
+	return '\0';
+}
+

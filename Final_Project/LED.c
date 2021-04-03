@@ -27,12 +27,28 @@ void GPIOPortE_Init(void){
 
 void LED_Init(void){
 	GPIOPortE_Init();
+	PE0 = 0;
+	PE1 = 0;
+	
 }
 
+// Green = PE0
 void SetGreenLED(uint8_t value){
-	
+	if(value == 0){
+		PE0 = 0;
+	}
+	else{
+		PE0 |= 0x01;
+	}
 }
 
+// Red = PE1
 void SetRedLED(uint8_t value){
-	
+	if(value == 0){
+		PE1 = 0;
+	}
+	else{
+		PE1 |= 0x02;
+	}
 }
+
