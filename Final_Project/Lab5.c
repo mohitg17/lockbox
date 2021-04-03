@@ -33,17 +33,16 @@
 #define SET_CODE 2
 uint8_t state = LOCKED;
 
-uint32_t code = 1234;
-uint32_t newCode = 1234;
-uint32_t enteredCode = 1234;
+char secretCode[] = {'1','2','3','4'};
+char newCode[] = {'1','2','3','4'};
+char enteredCode[] = {'1','2','3','4'};
+uint8_t totalDigits = 4;
+uint8_t digitIndex = 0;
 
 uint8_t updateDisplayNeeded = 1;
 uint8_t clearScreenNeeded = 1;
 
 char key;
-uint8_t totalDigits = 4;
-uint8_t currentDigit;
-
 
 
 //==========================
@@ -55,6 +54,23 @@ void recordKey(char k){
 	key = k;
 	updateDisplayNeeded = 1;
 }
+
+void processKey(char enteredKey){
+	
+}
+
+void resetCode(char *c){
+	char *localCode = c;
+	for(int i=0; i<totalDigits; i++){
+		localCode[i] = '*';
+	}
+}
+
+void Lockbox_Init(void){
+	resetCode(newCode);
+	resetCode(enteredCode);
+}
+
 
 //==========================
 // Graphics functions
@@ -72,15 +88,18 @@ void drawTitle(void){
 }
 
 
-void drawCode(uint32_t c){
-	uint32_t localCode = c;
+void drawCode(char *c){
+	char *localCode = c;
 	
-	ST7735_SetCursor(9,6);
+	ST7735_SetCursor(7,7);
 
-	char str[10];
-	sprintf(str, "%d", localCode);						// convert numbers to strings for display
-	ST7735_OutString(str);
+	for(int i=0; i<totalDigits; i++){
+		ST7735_OutChar(localCode[i]);
+		ST7735_OutString(" ");
+	}
 	
+	ST7735_DrawString(7,8,"- - - -",ST7735_YELLOW);
+
 }
 
 void drawLockScreen(){
@@ -116,6 +135,8 @@ int main(void) {
 	//Test_Speaker_Init(); 							// test speaker
 	//MotorTest();
 	
+	Lockbox_Init();
+	
   EnableInterrupts();
 
   while(1){
@@ -133,10 +154,12 @@ int main(void) {
 			else if(state == SET_CODE){
 				drawSetCodeScreen();
 			}
+			updateDisplayNeeded = 0;
 		}
 		
 		else{
 			char enteredKey = scanKeypad();	//blocking
+			processKey(enteredKey);
 		}
 		
   }
