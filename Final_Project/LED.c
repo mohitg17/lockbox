@@ -29,3 +29,10 @@ void LED_Init(void){
 	GPIOPortE_Init();
 }
 
+void SetGreenLED(uint8_t value){
+	
+}
+
+void SetRedLED(uint8_t value){
+	
+}
