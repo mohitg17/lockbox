@@ -31,7 +31,7 @@
 #define LOCKED 0
 #define UNLOCKED 1
 #define SET_CODE 2
-uint8_t state = UNLOCKED;
+uint8_t state = LOCKED;
 
 char secretCode[] = {'1','2','3','4'};
 char newCode[] = {'1','2','3','4'};
@@ -156,28 +156,29 @@ void drawTitle(void){
 void drawCode(char *c){
 	char *localCode = c;
 	
-	ST7735_SetCursor(7,7);
+	ST7735_SetCursor(7,8);
 
 	for(int i=0; i<totalDigits; i++){
 		ST7735_OutChar(localCode[i]);
 		ST7735_OutString(" ");
 	}
 	
-	ST7735_DrawString(7,8,"- - - -",ST7735_YELLOW);
+	ST7735_DrawString(7,9,"- - - -",ST7735_YELLOW);
 
 }
 
 void drawLockScreen(){
 	drawTitle();
 
-	ST7735_DrawString(6,5,"Enter Code",ST7735_YELLOW);
+	ST7735_DrawString(6,6,"Enter Code",ST7735_YELLOW);
 	drawCode(enteredCode);
 }
 
 void drawSetCodeScreen(){
 	drawTitle();
 
-
+	ST7735_DrawString(5,6,"Set New Code",ST7735_YELLOW);
+	drawCode(newCode);
 }
 
 void drawUnlockScreen(){
@@ -229,6 +230,7 @@ int main(void) {
 		}
 		
 		else{
+			while(1);		// temporary to simulate blocking
 			char enteredKey = scanKeypad();	//blocking
 			processKey(enteredKey);
 			updateDisplayNeeded = 1;
