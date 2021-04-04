@@ -10,11 +10,8 @@
 #ifndef __MUSIC_H
 #define __MUSIC_H
 
-#define PF1       (*((volatile uint32_t *)0x40025008))
-#define PF2       (*((volatile uint32_t *)0x40025010))
-#define PF3       (*((volatile uint32_t *)0x40025020))
-
-extern uint8_t IsMusicPlaying; 			// for play/pause button
+extern uint8_t isMusicPlaying; 			// for play/pause button
+extern uint8_t lockStatus;
 
 //==============================
 // Note Frequencies (pitches)
@@ -80,12 +77,12 @@ extern uint8_t IsMusicPlaying; 			// for play/pause button
 #define BF2 419   // 1864.655 Hz			
 #define B2 395   // 1975.533 Hz			
 #define C2 373   // 2093.005 Hz	
-#define R 0			// rest
+#define R 0		// rest
 
 //=====================================================
 // Note Lengths
 //=====================================================
-#define BEAT_CYCLES 80000000
+#define BEAT_CYCLES 9000000
 #define HALF 8
 #define QUARTER 4
 #define EIGHTH 2
@@ -100,7 +97,6 @@ struct Note {
 };
 
 struct Song {
-	const uint16_t *instrument;					// ptr to instrument voice array
 	struct Note *melody;								// ptr to array of Note structs
 	struct Note *harmony; 							// ptr to array of Note structs
 };
@@ -140,15 +136,6 @@ void Music_Stop(void);
 // output(s): none
 //============================================
 void Music_Rewind(void);
-
-//============================================
-// Change_Instrument
-//--------------------------------------------
-// Changes instrument
-// input(s): instrument (enumerated)
-// output(s): none
-//============================================
-void Change_Instrument(void);
 
 //============================================
 // SysTick_Init
