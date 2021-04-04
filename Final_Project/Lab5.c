@@ -31,12 +31,12 @@
 #define LOCKED 0
 #define UNLOCKED 1
 #define SET_CODE 2
-uint8_t state = LOCKED;
+uint8_t state = UNLOCKED;
 
 char secretCode[] = {'1','2','3','4'};
 char newCode[] = {'1','2','3','4'};
 char enteredCode[] = {'1','2','3','4'};
-uint8_t totalDigits = 4;
+const uint8_t totalDigits = 4;
 uint8_t digitIndex = 0;
 
 uint8_t updateDisplayNeeded = 1;
@@ -49,14 +49,10 @@ char key;
 // Helper functions
 //==========================
 
-// Called by scan()
+// Called by scan(), to be deleted
 void recordKey(char k){
 	key = k;
 	updateDisplayNeeded = 1;
-}
-
-void processKey(char enteredKey){
-	
 }
 
 void resetCode(char *c){
@@ -70,6 +66,75 @@ void Lockbox_Init(void){
 	resetCode(newCode);
 	resetCode(enteredCode);
 }
+
+uint8_t compareCodes(char *c1, char *c2){
+	for(int i=0; i<totalDigits; i++){
+		if(c1[i] != c2[i]){
+			return 0;
+		}
+	}
+	return 1;
+}
+
+void processKey(char enteredKey){
+	if(state == LOCKED){
+		// Record key
+		if(digitIndex < totalDigits){
+			enteredCode[digitIndex] = enteredKey;
+			digitIndex++;
+		}
+		
+		// Check if finished entering digits
+		if(digitIndex == totalDigits){
+			uint8_t isEqual = compareCodes(enteredCode, secretCode);
+			
+			if(isEqual){
+				state = UNLOCKED;
+				clearScreenNeeded = 1;
+			}
+			else{
+				
+			}
+			
+			resetCode(enteredCode);
+			digitIndex = 0;
+		}
+	}
+	
+	else if(state == UNLOCKED){
+		// Lock
+		if(enteredKey == '#'){
+			Motor_Lock();
+			state = LOCKED;
+			clearScreenNeeded = 1;
+		}
+		
+		// Set mode
+		else if(enteredKey == '*'){
+			state = SET_CODE;
+			resetCode(newCode);
+			clearScreenNeeded = 1;
+		}
+	}
+	
+	else if(state == SET_CODE){
+		// Record key
+		if(digitIndex < totalDigits){
+			newCode[digitIndex] = enteredKey;
+			digitIndex++;
+		}
+		
+		// Check if finished entering keys
+		if(digitIndex == totalDigits){
+			state = UNLOCKED;
+			digitIndex = 0;
+			clearScreenNeeded = 1;
+		}
+	}
+	
+}
+
+
 
 
 //==========================
@@ -105,16 +170,22 @@ void drawCode(char *c){
 void drawLockScreen(){
 	drawTitle();
 
-	ST7735_DrawString(6,5,"Enter Code:",ST7735_YELLOW);
+	ST7735_DrawString(6,5,"Enter Code",ST7735_YELLOW);
 	drawCode(enteredCode);
 }
 
 void drawSetCodeScreen(){
-	
+	drawTitle();
+
+
 }
 
 void drawUnlockScreen(){
-	
+	drawTitle();
+
+	ST7735_DrawString(7,5,"Welcome!",ST7735_YELLOW);
+	ST7735_DrawString(4,8,"# = Lock",ST7735_YELLOW);
+	ST7735_DrawString(4,9,"* = Set Code",ST7735_YELLOW);
 }
 
 
@@ -160,6 +231,7 @@ int main(void) {
 		else{
 			char enteredKey = scanKeypad();	//blocking
 			processKey(enteredKey);
+			updateDisplayNeeded = 1;
 		}
 		
   }
