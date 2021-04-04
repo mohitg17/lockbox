@@ -142,11 +142,6 @@ void processKey(char enteredKey){
 // Graphics functions
 //==========================
 
-void clearScreen(void){
-	ST7735_FillScreen(0);
-	clearScreenNeeded = 0;
-}
-
 void drawTitle(void){
 	ST7735_DrawString(0,1," ------------------- ",ST7735_YELLOW);
 	ST7735_DrawString(0,2," |  PANDORA'S BOX  | ",ST7735_YELLOW);
@@ -214,7 +209,8 @@ int main(void) {
 
   while(1){
     if(clearScreenNeeded){
-			clearScreen();
+			ST7735_FillScreen(0);
+			clearScreenNeeded = 0;
 		}
 		
 		else if(updateDisplayNeeded){
