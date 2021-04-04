@@ -199,9 +199,7 @@ int main(void) {
 	GPIOPortD_Init(); 							 // init DAC pin
 	DAC_Init(0x07FF); 							 // init DAC
 	Music_Init();
-	
-	//Test_Speaker_Init(); 							// test speaker
-	//MotorTest();
+	Motor_Init();
 	
 	Lockbox_Init();
 	
