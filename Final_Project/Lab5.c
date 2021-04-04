@@ -89,11 +89,12 @@ void processKey(char enteredKey){
 			uint8_t isEqual = compareCodes(enteredCode, secretCode);
 			
 			if(isEqual){
+				Motor_Unlock();
 				state = UNLOCKED;
 				clearScreenNeeded = 1;
 			}
 			else{
-				
+				// play incorrect beep
 			}
 			
 			resetCode(enteredCode);
