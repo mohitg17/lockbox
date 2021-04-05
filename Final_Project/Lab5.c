@@ -21,8 +21,8 @@
 #include "LED.h"
 #include "Motor.h"
 
-#include "TestMotor.h"
-#include "TestSpeaker.h"
+//#include "TestMotor.h"
+//#include "TestSpeaker.h"
 
 //==========================
 // Global variables
@@ -198,6 +198,7 @@ int main(void) {
 	ST7735_InitR(INITR_REDTAB); 		 // init LCD
 	GPIOPortD_Init(); 							 // init DAC pin
 	DAC_Init(0x07FF); 							 // init DAC
+	lockStatus = 1; 								 // default setting: Wii Channel music
 	Music_Init();
 	Motor_Init();
 	
@@ -206,6 +207,8 @@ int main(void) {
   EnableInterrupts();
 
   while(1){
+		Music_Play(); 								// test music (Wii Channel); comment out to turn off music
+		
     if(clearScreenNeeded){
 			ST7735_FillScreen(0);
 			clearScreenNeeded = 0;

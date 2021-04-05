@@ -27,7 +27,7 @@ void Test_Speaker_Init(void) {
 	SysTick_Start();
 }
 
-void SysTick_Handler(void) {
+void SysTick_Handler2(void) {
 	DAC_Out(waveTest[i]);					// outputs every value in wave array
 	i = ((i + 1) % 32);				// ensures index doesn't go out of bounds when note is played and it
 }
