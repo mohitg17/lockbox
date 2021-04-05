@@ -43,17 +43,29 @@ uint8_t updateDisplayNeeded = 1;
 uint8_t clearScreenNeeded = 1;
 
 char key;
+uint8_t keypadDataReady = 0;
 
 
 //==========================
 // Helper functions
 //==========================
 
-// Called by scan(), to be deleted
+// Called by keypad module to send key and set flag
 void recordKey(char k){
 	key = k;
-	updateDisplayNeeded = 1;
+	keypadDataReady = 1;
 }
+
+// Blocking call used by main to wait for keypad input. Clears flag
+char readKeypad(void){
+	// wait/block until keypad input ready
+	while(!keypadDataReady){}
+	
+	char localKey = key;
+	keypadDataReady = 0;
+	return localKey;
+}
+
 
 void resetCode(char *c){
 	char *localCode = c;
@@ -228,8 +240,8 @@ int main(void) {
 		}
 		
 		else{
-			while(1);		// temporary to simulate blocking
-			char enteredKey = scanKeypad();	//blocking
+			//while(1);		// temporary to simulate blocking
+			char enteredKey = readKeypad();	//blocking
 			processKey(enteredKey);
 			updateDisplayNeeded = 1;
 		}
