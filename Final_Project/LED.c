@@ -29,7 +29,6 @@ void LED_Init(void){
 	GPIOPortE_Init();
 	PE0 = 0;
 	PE1 = 0;
-	
 }
 
 // Green = PE0

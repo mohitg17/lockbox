@@ -1,0 +1,15 @@
+.\lab5.o: Lab5.c
+.\lab5.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+.\lab5.o: ../inc/tm4c123gh6pm.h
+.\lab5.o: ../inc/PLL.h
+.\lab5.o: ../inc/CortexM.h
+.\lab5.o: ../inc/LaunchPad.h
+.\lab5.o: ../inc/ST7735.h
+.\lab5.o: ../inc/TExaS.h
+.\lab5.o: ../inc/PWM.h
+.\lab5.o: DAC.h
+.\lab5.o: Music.h
+.\lab5.o: Keypad.h
+.\lab5.o: Lab5.h
+.\lab5.o: LED.h
+.\lab5.o: Motor.h

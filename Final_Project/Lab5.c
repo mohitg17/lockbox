@@ -13,6 +13,7 @@
 #include "../inc/LaunchPad.h"
 #include "../inc/ST7735.h"
 #include "../inc/TExaS.h" 
+#include "../inc/PWM.h" 
 
 #include "DAC.h"
 #include "Music.h" 

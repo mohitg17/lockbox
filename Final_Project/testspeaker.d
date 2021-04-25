@@ -1,0 +1,10 @@
+.\testspeaker.o: TestSpeaker.c
+.\testspeaker.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+.\testspeaker.o: ../inc/tm4c123gh6pm.h
+.\testspeaker.o: ../inc/PLL.h
+.\testspeaker.o: ../inc/CortexM.h
+.\testspeaker.o: ../inc/LaunchPad.h
+.\testspeaker.o: ../inc/ST7735.h
+.\testspeaker.o: ../inc/TExaS.h
+.\testspeaker.o: Music.h
+.\testspeaker.o: DAC.h

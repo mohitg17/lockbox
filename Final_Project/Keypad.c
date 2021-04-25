@@ -131,7 +131,3 @@ void GPIOPortB_Handler(void) {
 }
 
 
-char scanKeypad(void){
-	return '\0';
-}
-
