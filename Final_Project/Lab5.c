@@ -78,6 +78,23 @@ char scanKeypad(void){
 }
 
 //==========================
+// Music functions
+//==========================
+
+void playGoodSong(void){
+	setLockStatus(1);
+	Music_Init();
+	Music_Play();
+}
+
+void playBadSong(void){
+	setLockStatus(2);
+	Music_Init();
+	Music_Play();
+}
+
+
+//==========================
 // Helper functions
 //==========================
 
@@ -114,13 +131,20 @@ void processKey(char enteredKey){
 		if(digitIndex == totalDigits){
 			uint8_t isEqual = compareCodes(enteredCode, secretCode);
 			
+			// correct submission
 			if(isEqual){
 				Motor_Unlock();
 				state = UNLOCKED;
 				clearScreenNeeded = 1;
+				
+				// play correct sound
+				playGoodSong();
 			}
+			
+			// incorrect submission
 			else{
-				// play incorrect beep
+				// play incorrect sound
+				playBadSong();
 			}
 			
 			resetCode(enteredCode);

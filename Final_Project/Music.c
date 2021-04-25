@@ -180,7 +180,7 @@ struct Song unlock = {									// default song settings
 };
 
 //===================================
-// Unlock song (Wii Channel Theme)
+// Incorrect song
 //===================================
 struct Note bad_melody[] = {
 	{C0, (QUARTER-BLANK)},	{R, BLANK}, 
@@ -537,5 +537,16 @@ void Timer2A_Stop(void){
 //==========================================
 void Timer2A_ChangePeriod(uint32_t note) {
 	TIMER2_TAILR_R = note; 
+}
+
+//==========================================
+// setLockStatus
+//------------------------------------------
+// Changes lockStatus
+// inputs: status
+// outputs: none
+//==========================================
+void setLockStatus(uint8_t status){
+	lockStatus = status;
 }
 

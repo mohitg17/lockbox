@@ -238,4 +238,14 @@ void Timer2A_Stop(void);
 //==========================================
 void Timer2A_ChangePeriod(uint32_t note);
 
+//==========================================
+// setLockStatus
+//------------------------------------------
+// Changes lockStatus
+// inputs: status
+// outputs: none
+//==========================================
+void setLockStatus(uint8_t status);
+
+
 #endif
