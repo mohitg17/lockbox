@@ -10,7 +10,7 @@ I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x5E8EF392)
 I (..\inc\../inc/LaunchPad.h)(0x6060029C)
 I (..\inc\../inc/tm4c123gh6pm.h)(0x6060029D)
 I (..\inc\../inc/CortexM.h)(0x6060029C)
-F (.\Lab5.c)(0x6084D5D6)(-c --cpu Cortex-M4 -D__EVAL -g -O0 --apcs=interwork --split_sections --signed_chars -I .. -I ..\..\.. --C99-I.\RTE\_Final_Project-IC:\Users\zande\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\Core\Include-IC:\Users\zande\AppData\Local\Arm\Packs\Keil\TM4C_DFP\1.1.0\Device\Include\TM4C123-D__UVISION_VERSION="533" -D_RTE_ -DTM4C123GH6PM -D_RTE_ -Drvmdk -DPART_LM4F120H5QR-o .\lab5.o --omf_browse .\lab5.crf --depend .\lab5.d)
+F (.\Lab5.c)(0x6084DE4C)(-c --cpu Cortex-M4 -D__EVAL -g -O0 --apcs=interwork --split_sections --signed_chars -I .. -I ..\..\.. --C99-I.\RTE\_Final_Project-IC:\Users\zande\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\Core\Include-IC:\Users\zande\AppData\Local\Arm\Packs\Keil\TM4C_DFP\1.1.0\Device\Include\TM4C123-D__UVISION_VERSION="533" -D_RTE_ -DTM4C123GH6PM -D_RTE_ -Drvmdk -DPART_LM4F120H5QR-o .\lab5.o --omf_browse .\lab5.crf --depend .\lab5.d)
 I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x5E8EF392)
 I (../inc/tm4c123gh6pm.h)(0x6060029D)
 I (../inc/PLL.h)(0x6060029C)
@@ -18,10 +18,9 @@ I (../inc/CortexM.h)(0x6060029C)
 I (../inc/LaunchPad.h)(0x6060029C)
 I (../inc/ST7735.h)(0x6060029C)
 I (../inc/TExaS.h)(0x6060029C)
-I (../inc/PWM.h)(0x6060029C)
 I (DAC.h)(0x60661E30)
 I (Music.h)(0x60692F2C)
-I (Keypad.h)(0x606B5B47)
+I (Keypad.h)(0x6084DA43)
 I (Lab5.h)(0x60661E30)
 I (LED.h)(0x6067AB53)
 I (Motor.h)(0x6067AB7B)
@@ -62,18 +61,16 @@ I (../inc/TExaS.h)(0x6060029C)
 I (Music.h)(0x60692F2C)
 I (DAC.h)(0x60661E30)
 F (.\TestSpeaker.h)(0x60627AAD)()
-F (.\Keypad.c)(0x606B5B52)(-c --cpu Cortex-M4 -D__EVAL -g -O0 --apcs=interwork --split_sections --signed_chars -I .. -I ..\..\.. --C99-I.\RTE\_Final_Project-IC:\Users\zande\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\Core\Include-IC:\Users\zande\AppData\Local\Arm\Packs\Keil\TM4C_DFP\1.1.0\Device\Include\TM4C123-D__UVISION_VERSION="533" -D_RTE_ -DTM4C123GH6PM -D_RTE_ -Drvmdk -DPART_LM4F120H5QR-o .\keypad.o --omf_browse .\keypad.crf --depend .\keypad.d)
+F (.\Keypad.c)(0x6084DA43)(-c --cpu Cortex-M4 -D__EVAL -g -O0 --apcs=interwork --split_sections --signed_chars -I .. -I ..\..\.. --C99-I.\RTE\_Final_Project-IC:\Users\zande\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\Core\Include-IC:\Users\zande\AppData\Local\Arm\Packs\Keil\TM4C_DFP\1.1.0\Device\Include\TM4C123-D__UVISION_VERSION="533" -D_RTE_ -DTM4C123GH6PM -D_RTE_ -Drvmdk -DPART_LM4F120H5QR-o .\keypad.o --omf_browse .\keypad.crf --depend .\keypad.d)
 I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x5E8EF392)
 I (../inc/tm4c123gh6pm.h)(0x6060029D)
 I (../inc/CortexM.h)(0x6060029C)
-I (Keypad.h)(0x606B5B47)
-I (Lab5.h)(0x60661E30)
 F (.\LED.c)(0x6067C04A)(-c --cpu Cortex-M4 -D__EVAL -g -O0 --apcs=interwork --split_sections --signed_chars -I .. -I ..\..\.. --C99-I.\RTE\_Final_Project-IC:\Users\zande\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\Core\Include-IC:\Users\zande\AppData\Local\Arm\Packs\Keil\TM4C_DFP\1.1.0\Device\Include\TM4C123-D__UVISION_VERSION="533" -D_RTE_ -DTM4C123GH6PM -D_RTE_ -Drvmdk -DPART_LM4F120H5QR-o .\led.o --omf_browse .\led.crf --depend .\led.d)
 I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x5E8EF392)
 I (../inc/tm4c123gh6pm.h)(0x6060029D)
 I (../inc/CortexM.h)(0x6060029C)
 I (LED.h)(0x6067AB53)
-F (.\Motor.c)(0x6084D7A1)(-c --cpu Cortex-M4 -D__EVAL -g -O0 --apcs=interwork --split_sections --signed_chars -I .. -I ..\..\.. --C99-I.\RTE\_Final_Project-IC:\Users\zande\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\Core\Include-IC:\Users\zande\AppData\Local\Arm\Packs\Keil\TM4C_DFP\1.1.0\Device\Include\TM4C123-D__UVISION_VERSION="533" -D_RTE_ -DTM4C123GH6PM -D_RTE_ -Drvmdk -DPART_LM4F120H5QR-o .\motor.o --omf_browse .\motor.crf --depend .\motor.d)
+F (.\Motor.c)(0x6084D7F5)(-c --cpu Cortex-M4 -D__EVAL -g -O0 --apcs=interwork --split_sections --signed_chars -I .. -I ..\..\.. --C99-I.\RTE\_Final_Project-IC:\Users\zande\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\Core\Include-IC:\Users\zande\AppData\Local\Arm\Packs\Keil\TM4C_DFP\1.1.0\Device\Include\TM4C123-D__UVISION_VERSION="533" -D_RTE_ -DTM4C123GH6PM -D_RTE_ -Drvmdk -DPART_LM4F120H5QR-o .\motor.o --omf_browse .\motor.crf --depend .\motor.d)
 I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x5E8EF392)
 I (../inc/tm4c123gh6pm.h)(0x6060029D)
 I (../inc/CortexM.h)(0x6060029C)

@@ -9,7 +9,6 @@ Section Cross References
     startup.o(RESET) refers (Special) to heapauxi.o(.text) for __use_two_region_memory
     startup.o(RESET) refers to startup.o(STACK) for StackMem
     startup.o(RESET) refers to music.o(i.SysTick_Handler) for SysTick_Handler
-    startup.o(RESET) refers to keypad.o(i.GPIOPortB_Handler) for GPIOPortB_Handler
     startup.o(RESET) refers to keypad.o(i.Timer0A_Handler) for Timer0A_Handler
     startup.o(RESET) refers to music.o(i.Timer1A_Handler) for Timer1A_Handler
     startup.o(RESET) refers to music.o(i.Timer2A_Handler) for Timer2A_Handler
@@ -41,29 +40,32 @@ Section Cross References
     lab5.o(i.drawUnlockScreen) refers to st7735.o(i.ST7735_DrawString) for ST7735_DrawString
     lab5.o(i.main) refers to pll.o(i.PLL_Init) for PLL_Init
     lab5.o(i.main) refers to texas.o(i.TExaS_Init) for TExaS_Init
+    lab5.o(i.main) refers to launchpad.o(i.LaunchPad_Init) for LaunchPad_Init
     lab5.o(i.main) refers to st7735.o(i.ST7735_InitR) for ST7735_InitR
     lab5.o(i.main) refers to dac.o(i.GPIOPortD_Init) for GPIOPortD_Init
     lab5.o(i.main) refers to dac.o(i.DAC_Init) for DAC_Init
     lab5.o(i.main) refers to music.o(i.Music_Init) for Music_Init
     lab5.o(i.main) refers to motor.o(i.Motor_Init) for Motor_Init
     lab5.o(i.main) refers to lab5.o(i.Lockbox_Init) for Lockbox_Init
+    lab5.o(i.main) refers to keypad.o(i.GPIOPortB_Init) for GPIOPortB_Init
     lab5.o(i.main) refers to startup.o(.text) for EnableInterrupts
-    lab5.o(i.main) refers to music.o(i.Music_Play) for Music_Play
     lab5.o(i.main) refers to st7735.o(i.ST7735_FillScreen) for ST7735_FillScreen
     lab5.o(i.main) refers to lab5.o(i.drawLockScreen) for drawLockScreen
     lab5.o(i.main) refers to lab5.o(i.drawUnlockScreen) for drawUnlockScreen
     lab5.o(i.main) refers to lab5.o(i.drawSetCodeScreen) for drawSetCodeScreen
-    lab5.o(i.main) refers to lab5.o(i.readKeypad) for readKeypad
+    lab5.o(i.main) refers to lab5.o(i.scanKeypad) for scanKeypad
     lab5.o(i.main) refers to lab5.o(i.processKey) for processKey
     lab5.o(i.main) refers to music.o(.data) for lockStatus
+    lab5.o(i.main) refers to lab5.o(i.typeKey) for typeKey
     lab5.o(i.main) refers to lab5.o(.data) for clearScreenNeeded
     lab5.o(i.processKey) refers to lab5.o(i.compareCodes) for compareCodes
     lab5.o(i.processKey) refers to motor.o(i.Motor_Unlock) for Motor_Unlock
     lab5.o(i.processKey) refers to lab5.o(i.resetCode) for resetCode
     lab5.o(i.processKey) refers to motor.o(i.Motor_Lock) for Motor_Lock
     lab5.o(i.processKey) refers to lab5.o(.data) for state
-    lab5.o(i.readKeypad) refers to lab5.o(.data) for keypadDataReady
     lab5.o(i.recordKey) refers to lab5.o(.data) for key
+    lab5.o(i.scanKeypad) refers to lab5.o(.data) for keyReady
+    lab5.o(i.typeKey) refers to lab5.o(i.recordKey) for recordKey
     music.o(i.Music_Init) refers to music.o(i.SysTick_Init) for SysTick_Init
     music.o(i.Music_Init) refers to music.o(i.Timer1A_Init) for Timer1A_Init
     music.o(i.Music_Init) refers to music.o(i.Timer2A_Init) for Timer2A_Init
@@ -263,12 +265,9 @@ Section Cross References
     testspeaker.o(i.SysTick_Handler2) refers to testspeaker.o(.data) for i
     testspeaker.o(i.Test_Speaker_Init) refers to music.o(i.SysTick_Init) for SysTick_Init
     testspeaker.o(i.Test_Speaker_Init) refers to music.o(i.SysTick_Start) for SysTick_Start
-    keypad.o(i.GPIOPortB_Handler) refers to keypad.o(i.scan) for scan
-    keypad.o(i.GPIOPortB_Handler) refers to lab5.o(i.recordKey) for recordKey
-    keypad.o(i.GPIOPortB_Handler) refers to keypad.o(i.Timer0A_Init) for Timer0A_Init
-    keypad.o(i.Timer0A_Handler) refers to keypad.o(i.GPIOArm) for GPIOArm
-    keypad.o(i.scan) refers to keypad.o(i.scanColumns) for scanColumns
-    keypad.o(i.scanColumns) refers to keypad.o(.constdata) for keypadMatrix
+    keypad.o(i.GPIOPortB_Init) refers to keypad.o(i.Timer0A_Init) for Timer0A_Init
+    keypad.o(i.GPIOPortB_Init) refers to keypad.o(.data) for row
+    keypad.o(i.Timer0A_Handler) refers to keypad.o(.data) for row
     led.o(i.LED_Init) refers to led.o(i.GPIOPortE_Init) for GPIOPortE_Init
     motor.o(i.Motor_Init) refers to motor.o(i.GPIOPortC_Init) for GPIOPortC_Init
     motor.o(i.Motor_Init) refers to pwm.o(i.PWM0G_Init) for PWM0G_Init
@@ -382,16 +381,19 @@ Section Cross References
 Removing Unused input sections from the image.
 
     Removing launchpad.o(i.DelayMs), (32 bytes).
-    Removing launchpad.o(i.LaunchPad_Init), (92 bytes).
     Removing launchpad.o(i.LaunchPad_Input), (24 bytes).
     Removing launchpad.o(i.LaunchPad_Output), (12 bytes).
     Removing launchpad.o(i.LaunchPad_WaitForRelease), (56 bytes).
     Removing launchpad.o(i.LaunchPad_WaitForTouch), (32 bytes).
     Removing lab5.o(.constdata), (1 bytes).
+    Removing music.o(i.Music_Play), (28 bytes).
     Removing music.o(i.Music_Rewind), (24 bytes).
     Removing music.o(i.Music_Stop), (28 bytes).
+    Removing music.o(i.SysTick_Start), (10 bytes).
     Removing music.o(i.SysTick_Stop), (10 bytes).
+    Removing music.o(i.Timer1A_Start), (12 bytes).
     Removing music.o(i.Timer1A_Stop), (12 bytes).
+    Removing music.o(i.Timer2A_Start), (12 bytes).
     Removing music.o(i.Timer2A_Stop), (12 bytes).
     Removing st7735.o(i.Output_Clear), (10 bytes).
     Removing st7735.o(i.Output_Color), (12 bytes).
@@ -466,7 +468,7 @@ Removing Unused input sections from the image.
     Removing testspeaker.o(i.Test_Speaker_Init), (16 bytes).
     Removing testspeaker.o(.constdata), (128 bytes).
     Removing testspeaker.o(.data), (1 bytes).
-    Removing keypad.o(i.GPIOPortB_Init), (184 bytes).
+    Removing keypad.o(.constdata), (12 bytes).
     Removing led.o(i.GPIOPortE_Init), (116 bytes).
     Removing led.o(i.LED_Init), (20 bytes).
     Removing led.o(i.SetGreenLED), (28 bytes).
@@ -477,7 +479,7 @@ Removing Unused input sections from the image.
     Removing pwm.o(i.PWM0B_Duty), (12 bytes).
     Removing pwm.o(i.PWM0B_Init), (188 bytes).
 
-95 unused section(s) (total 6170 bytes) removed from the image.
+98 unused section(s) (total 5968 bytes) removed from the image.
 
 ==============================================================================
 
@@ -488,51 +490,51 @@ Image Symbol Table
     Symbol Name                              Value     Ov Type        Size  Object(Section)
 
     RESET                                    0x00000000   Section      644  startup.o(RESET)
+    ../clib/angel/boardlib.s                 0x00000000   Number         0  boardshut.o ABSOLUTE
     ../clib/angel/boardlib.s                 0x00000000   Number         0  boardinit1.o ABSOLUTE
     ../clib/angel/boardlib.s                 0x00000000   Number         0  boardinit2.o ABSOLUTE
     ../clib/angel/boardlib.s                 0x00000000   Number         0  boardinit3.o ABSOLUTE
-    ../clib/angel/boardlib.s                 0x00000000   Number         0  boardshut.o ABSOLUTE
     ../clib/angel/dczerorl2.s                0x00000000   Number         0  __dczerorl2.o ABSOLUTE
     ../clib/angel/handlers.s                 0x00000000   Number         0  __scatter_zi.o ABSOLUTE
     ../clib/angel/kernel.s                   0x00000000   Number         0  __rtentry.o ABSOLUTE
     ../clib/angel/kernel.s                   0x00000000   Number         0  __rtentry2.o ABSOLUTE
-    ../clib/angel/kernel.s                   0x00000000   Number         0  __rtentry4.o ABSOLUTE
-    ../clib/angel/kernel.s                   0x00000000   Number         0  rtexit.o ABSOLUTE
     ../clib/angel/kernel.s                   0x00000000   Number         0  rtexit2.o ABSOLUTE
+    ../clib/angel/kernel.s                   0x00000000   Number         0  rtexit.o ABSOLUTE
+    ../clib/angel/kernel.s                   0x00000000   Number         0  __rtentry4.o ABSOLUTE
     ../clib/angel/rt.s                       0x00000000   Number         0  rt_raise.o ABSOLUTE
     ../clib/angel/scatter.s                  0x00000000   Number         0  __scatter.o ABSOLUTE
     ../clib/angel/startup.s                  0x00000000   Number         0  __main.o ABSOLUTE
-    ../clib/angel/sys.s                      0x00000000   Number         0  sys_stackheap_outer.o ABSOLUTE
     ../clib/angel/sys.s                      0x00000000   Number         0  use_no_semi.o ABSOLUTE
     ../clib/angel/sys.s                      0x00000000   Number         0  libspace.o ABSOLUTE
     ../clib/angel/sys.s                      0x00000000   Number         0  indicate_semi.o ABSOLUTE
-    ../clib/angel/sysapp.c                   0x00000000   Number         0  sys_wrch.o ABSOLUTE
+    ../clib/angel/sys.s                      0x00000000   Number         0  sys_stackheap_outer.o ABSOLUTE
     ../clib/angel/sysapp.c                   0x00000000   Number         0  sys_exit.o ABSOLUTE
+    ../clib/angel/sysapp.c                   0x00000000   Number         0  sys_wrch.o ABSOLUTE
     ../clib/angel/sysapp.c                   0x00000000   Number         0  sys_command.o ABSOLUTE
+    ../clib/armsys.c                         0x00000000   Number         0  no_argv.o ABSOLUTE
     ../clib/armsys.c                         0x00000000   Number         0  argv_veneer.o ABSOLUTE
     ../clib/armsys.c                         0x00000000   Number         0  _get_argv_nomalloc.o ABSOLUTE
     ../clib/armsys.c                         0x00000000   Number         0  argv_veneer.o ABSOLUTE
-    ../clib/armsys.c                         0x00000000   Number         0  no_argv.o ABSOLUTE
     ../clib/heapalloc.c                      0x00000000   Number         0  hrguard.o ABSOLUTE
     ../clib/heapaux.c                        0x00000000   Number         0  heapauxi.o ABSOLUTE
+    ../clib/libinit.s                        0x00000000   Number         0  libshutdown.o ABSOLUTE
+    ../clib/libinit.s                        0x00000000   Number         0  libshutdown2.o ABSOLUTE
     ../clib/libinit.s                        0x00000000   Number         0  libinit2.o ABSOLUTE
     ../clib/libinit.s                        0x00000000   Number         0  libinit.o ABSOLUTE
-    ../clib/libinit.s                        0x00000000   Number         0  libshutdown2.o ABSOLUTE
-    ../clib/libinit.s                        0x00000000   Number         0  libshutdown.o ABSOLUTE
-    ../clib/signal.c                         0x00000000   Number         0  defsig_abrt_inner.o ABSOLUTE
-    ../clib/signal.c                         0x00000000   Number         0  defsig_other.o ABSOLUTE
-    ../clib/signal.c                         0x00000000   Number         0  defsig_rtmem_formal.o ABSOLUTE
-    ../clib/signal.c                         0x00000000   Number         0  defsig_exit.o ABSOLUTE
     ../clib/signal.c                         0x00000000   Number         0  defsig_rtmem_inner.o ABSOLUTE
-    ../clib/signal.c                         0x00000000   Number         0  __raise.o ABSOLUTE
-    ../clib/signal.c                         0x00000000   Number         0  defsig_general.o ABSOLUTE
-    ../clib/signal.c                         0x00000000   Number         0  defsig_rtmem_outer.o ABSOLUTE
-    ../clib/signal.c                         0x00000000   Number         0  defsig_fpe_inner.o ABSOLUTE
-    ../clib/signal.c                         0x00000000   Number         0  defsig_rtred_inner.o ABSOLUTE
-    ../clib/signal.c                         0x00000000   Number         0  defsig_stak_inner.o ABSOLUTE
     ../clib/signal.c                         0x00000000   Number         0  defsig_pvfn_inner.o ABSOLUTE
-    ../clib/signal.c                         0x00000000   Number         0  defsig_cppl_inner.o ABSOLUTE
+    ../clib/signal.c                         0x00000000   Number         0  defsig_stak_inner.o ABSOLUTE
+    ../clib/signal.c                         0x00000000   Number         0  defsig_rtred_inner.o ABSOLUTE
+    ../clib/signal.c                         0x00000000   Number         0  defsig_fpe_inner.o ABSOLUTE
+    ../clib/signal.c                         0x00000000   Number         0  defsig_abrt_inner.o ABSOLUTE
+    ../clib/signal.c                         0x00000000   Number         0  defsig_general.o ABSOLUTE
+    ../clib/signal.c                         0x00000000   Number         0  defsig_exit.o ABSOLUTE
+    ../clib/signal.c                         0x00000000   Number         0  defsig_other.o ABSOLUTE
     ../clib/signal.c                         0x00000000   Number         0  defsig_segv_inner.o ABSOLUTE
+    ../clib/signal.c                         0x00000000   Number         0  defsig_cppl_inner.o ABSOLUTE
+    ../clib/signal.c                         0x00000000   Number         0  __raise.o ABSOLUTE
+    ../clib/signal.c                         0x00000000   Number         0  defsig_rtmem_outer.o ABSOLUTE
+    ../clib/signal.c                         0x00000000   Number         0  defsig_rtmem_formal.o ABSOLUTE
     ../clib/signal.s                         0x00000000   Number         0  defsig.o ABSOLUTE
     ../clib/stdlib.c                         0x00000000   Number         0  exit.o ABSOLUTE
     ../fplib/fpinit.s                        0x00000000   Number         0  fpinit.o ABSOLUTE
@@ -611,87 +613,81 @@ Image Symbol Table
     i.DAC_Init                               0x0000072c   Section        0  dac.o(i.DAC_Init)
     i.DAC_Out                                0x00000788   Section        0  dac.o(i.DAC_Out)
     i.Delay1ms                               0x000007a0   Section        0  st7735.o(i.Delay1ms)
-    i.GPIOArm                                0x000007c0   Section        0  keypad.o(i.GPIOArm)
-    i.GPIOPortB_Handler                      0x000007fc   Section        0  keypad.o(i.GPIOPortB_Handler)
-    i.GPIOPortC_Init                         0x00000820   Section        0  motor.o(i.GPIOPortC_Init)
-    i.GPIOPortD_Init                         0x00000890   Section        0  dac.o(i.GPIOPortD_Init)
-    i.Lockbox_Init                           0x00000988   Section        0  lab5.o(i.Lockbox_Init)
-    i.LogicAnalyzer                          0x000009a0   Section        0  texas.o(i.LogicAnalyzer)
-    i.Motor_Init                             0x000009b4   Section        0  motor.o(i.Motor_Init)
-    i.Motor_Lock                             0x000009c6   Section        0  motor.o(i.Motor_Lock)
-    i.Motor_Unlock                           0x000009d2   Section        0  motor.o(i.Motor_Unlock)
-    i.Music_Init                             0x000009e0   Section        0  music.o(i.Music_Init)
-    i.Music_Play                             0x00000ae4   Section        0  music.o(i.Music_Play)
-    i.PLL_Init                               0x00000b00   Section        0  pll.o(i.PLL_Init)
-    i.PWM0G_Duty                             0x00000b7c   Section        0  pwm.o(i.PWM0G_Duty)
-    i.PWM0G_Init                             0x00000b88   Section        0  pwm.o(i.PWM0G_Init)
-    i.PeriodicTask2_Init                     0x00000c54   Section        0  texas.o(i.PeriodicTask2_Init)
-    i.ST7735_DrawCharS                       0x00000d0c   Section        0  st7735.o(i.ST7735_DrawCharS)
-    i.ST7735_DrawPixel                       0x00000e04   Section        0  st7735.o(i.ST7735_DrawPixel)
-    i.ST7735_DrawString                      0x00000e50   Section        0  st7735.o(i.ST7735_DrawString)
-    i.ST7735_FillRect                        0x00000ea8   Section        0  st7735.o(i.ST7735_FillRect)
-    i.ST7735_FillScreen                      0x00000f58   Section        0  st7735.o(i.ST7735_FillScreen)
-    i.ST7735_InitR                           0x00000f7c   Section        0  st7735.o(i.ST7735_InitR)
-    i.ST7735_OutChar                         0x00000ff8   Section        0  st7735.o(i.ST7735_OutChar)
-    i.ST7735_OutString                       0x000010cc   Section        0  st7735.o(i.ST7735_OutString)
-    i.ST7735_SetCursor                       0x000010e4   Section        0  st7735.o(i.ST7735_SetCursor)
-    i.Scope                                  0x00001104   Section        0  texas.o(i.Scope)
-    i.SysTick_Handler                        0x00001118   Section        0  music.o(i.SysTick_Handler)
-    i.SysTick_Init                           0x000012a8   Section        0  music.o(i.SysTick_Init)
-    i.SysTick_Start                          0x000012d8   Section        0  music.o(i.SysTick_Start)
-    i.TExaS_Init                             0x000012e4   Section        0  texas.o(i.TExaS_Init)
-    i.Timer0A_Handler                        0x00001378   Section        0  keypad.o(i.Timer0A_Handler)
-    i.Timer0A_Init                           0x0000138c   Section        0  keypad.o(i.Timer0A_Init)
-    i.Timer1A_ChangePeriod                   0x000013d8   Section        0  music.o(i.Timer1A_ChangePeriod)
-    i.Timer1A_Handler                        0x000013e4   Section        0  music.o(i.Timer1A_Handler)
-    i.Timer1A_Init                           0x00001448   Section        0  music.o(i.Timer1A_Init)
-    i.Timer1A_Start                          0x000014a0   Section        0  music.o(i.Timer1A_Start)
-    i.Timer2A_ChangePeriod                   0x000014ac   Section        0  music.o(i.Timer2A_ChangePeriod)
-    i.Timer2A_Handler                        0x000014b8   Section        0  music.o(i.Timer2A_Handler)
-    i.Timer2A_Init                           0x0000151c   Section        0  music.o(i.Timer2A_Init)
-    i.Timer2A_Start                          0x00001574   Section        0  music.o(i.Timer2A_Start)
-    i.Timer3A_Handler                        0x00001580   Section        0  motor.o(i.Timer3A_Handler)
-    i.Timer4A_Handler                        0x000015b0   Section        0  motor.o(i.Timer4A_Handler)
-    i.Timer4A_Init                           0x000015d4   Section        0  motor.o(i.Timer4A_Init)
-    i.Timer5A_Handler                        0x00001628   Section        0  texas.o(i.Timer5A_Handler)
-    i.UART_Init                              0x00001640   Section        0  texas.o(i.UART_Init)
-    i.commandList                            0x000016dc   Section        0  st7735.o(i.commandList)
-    commandList                              0x000016dd   Thumb Code    86  st7735.o(i.commandList)
-    i.commonInit                             0x00001734   Section        0  st7735.o(i.commonInit)
-    commonInit                               0x00001735   Thumb Code   342  st7735.o(i.commonInit)
-    i.compareCodes                           0x000018bc   Section        0  lab5.o(i.compareCodes)
-    i.deselect                               0x000018dc   Section        0  st7735.o(i.deselect)
-    deselect                                 0x000018dd   Thumb Code    24  st7735.o(i.deselect)
-    i.drawCode                               0x000018f8   Section        0  lab5.o(i.drawCode)
-    i.drawLockScreen                         0x00001938   Section        0  lab5.o(i.drawLockScreen)
-    i.drawSetCodeScreen                      0x00001964   Section        0  lab5.o(i.drawSetCodeScreen)
-    i.drawTitle                              0x00001994   Section        0  lab5.o(i.drawTitle)
-    i.drawUnlockScreen                       0x000019f4   Section        0  lab5.o(i.drawUnlockScreen)
-    i.main                                   0x00001a50   Section        0  lab5.o(i.main)
-    i.processKey                             0x00001b00   Section        0  lab5.o(i.processKey)
-    i.pushColor                              0x00001be0   Section        0  st7735.o(i.pushColor)
-    pushColor                                0x00001be1   Thumb Code    18  st7735.o(i.pushColor)
-    i.readKeypad                             0x00001bf4   Section        0  lab5.o(i.readKeypad)
-    i.recordKey                              0x00001c14   Section        0  lab5.o(i.recordKey)
-    i.resetCode                              0x00001c28   Section        0  lab5.o(i.resetCode)
-    i.scan                                   0x00001c3c   Section        0  keypad.o(i.scan)
-    i.scanColumns                            0x00001c90   Section        0  keypad.o(i.scanColumns)
-    i.setAddrWindow                          0x00001ce8   Section        0  st7735.o(i.setAddrWindow)
-    setAddrWindow                            0x00001ce9   Thumb Code   106  st7735.o(i.setAddrWindow)
-    i.writecommand                           0x00001d5c   Section        0  st7735.o(i.writecommand)
-    writecommand                             0x00001d5d   Thumb Code    46  st7735.o(i.writecommand)
-    i.writedata                              0x00001d94   Section        0  st7735.o(i.writedata)
-    writedata                                0x00001d95   Thumb Code    26  st7735.o(i.writedata)
-    .constdata                               0x00001db8   Section      128  music.o(.constdata)
-    .constdata                               0x00001e38   Section     2114  st7735.o(.constdata)
-    Font                                     0x00001e38   Data        1275  st7735.o(.constdata)
-    Bcmd                                     0x00002333   Data         103  st7735.o(.constdata)
-    Rcmd1                                    0x0000239a   Data          59  st7735.o(.constdata)
-    Rcmd2green                               0x000023d5   Data          13  st7735.o(.constdata)
-    Rcmd2red                                 0x000023e2   Data          13  st7735.o(.constdata)
-    Rcmd3                                    0x000023ef   Data          43  st7735.o(.constdata)
-    .constdata                               0x0000267a   Section       12  keypad.o(.constdata)
-    .data                                    0x20000000   Section       18  lab5.o(.data)
+    i.GPIOPortB_Init                         0x000007c0   Section        0  keypad.o(i.GPIOPortB_Init)
+    i.GPIOPortC_Init                         0x00000834   Section        0  motor.o(i.GPIOPortC_Init)
+    i.GPIOPortD_Init                         0x000008a4   Section        0  dac.o(i.GPIOPortD_Init)
+    i.LaunchPad_Init                         0x0000099c   Section        0  launchpad.o(i.LaunchPad_Init)
+    i.Lockbox_Init                           0x000009f8   Section        0  lab5.o(i.Lockbox_Init)
+    i.LogicAnalyzer                          0x00000a10   Section        0  texas.o(i.LogicAnalyzer)
+    i.Motor_Init                             0x00000a24   Section        0  motor.o(i.Motor_Init)
+    i.Motor_Lock                             0x00000a36   Section        0  motor.o(i.Motor_Lock)
+    i.Motor_Unlock                           0x00000a42   Section        0  motor.o(i.Motor_Unlock)
+    i.Music_Init                             0x00000a50   Section        0  music.o(i.Music_Init)
+    i.PLL_Init                               0x00000b54   Section        0  pll.o(i.PLL_Init)
+    i.PWM0G_Duty                             0x00000bd0   Section        0  pwm.o(i.PWM0G_Duty)
+    i.PWM0G_Init                             0x00000bdc   Section        0  pwm.o(i.PWM0G_Init)
+    i.PeriodicTask2_Init                     0x00000ca8   Section        0  texas.o(i.PeriodicTask2_Init)
+    i.ST7735_DrawCharS                       0x00000d60   Section        0  st7735.o(i.ST7735_DrawCharS)
+    i.ST7735_DrawPixel                       0x00000e58   Section        0  st7735.o(i.ST7735_DrawPixel)
+    i.ST7735_DrawString                      0x00000ea4   Section        0  st7735.o(i.ST7735_DrawString)
+    i.ST7735_FillRect                        0x00000efc   Section        0  st7735.o(i.ST7735_FillRect)
+    i.ST7735_FillScreen                      0x00000fac   Section        0  st7735.o(i.ST7735_FillScreen)
+    i.ST7735_InitR                           0x00000fd0   Section        0  st7735.o(i.ST7735_InitR)
+    i.ST7735_OutChar                         0x0000104c   Section        0  st7735.o(i.ST7735_OutChar)
+    i.ST7735_OutString                       0x00001120   Section        0  st7735.o(i.ST7735_OutString)
+    i.ST7735_SetCursor                       0x00001138   Section        0  st7735.o(i.ST7735_SetCursor)
+    i.Scope                                  0x00001158   Section        0  texas.o(i.Scope)
+    i.SysTick_Handler                        0x0000116c   Section        0  music.o(i.SysTick_Handler)
+    i.SysTick_Init                           0x000012fc   Section        0  music.o(i.SysTick_Init)
+    i.TExaS_Init                             0x0000132c   Section        0  texas.o(i.TExaS_Init)
+    i.Timer0A_Handler                        0x000013c0   Section        0  keypad.o(i.Timer0A_Handler)
+    i.Timer0A_Init                           0x000015f4   Section        0  keypad.o(i.Timer0A_Init)
+    i.Timer1A_ChangePeriod                   0x00001664   Section        0  music.o(i.Timer1A_ChangePeriod)
+    i.Timer1A_Handler                        0x00001670   Section        0  music.o(i.Timer1A_Handler)
+    i.Timer1A_Init                           0x000016d4   Section        0  music.o(i.Timer1A_Init)
+    i.Timer2A_ChangePeriod                   0x0000172c   Section        0  music.o(i.Timer2A_ChangePeriod)
+    i.Timer2A_Handler                        0x00001738   Section        0  music.o(i.Timer2A_Handler)
+    i.Timer2A_Init                           0x0000179c   Section        0  music.o(i.Timer2A_Init)
+    i.Timer3A_Handler                        0x000017f4   Section        0  motor.o(i.Timer3A_Handler)
+    i.Timer4A_Handler                        0x00001824   Section        0  motor.o(i.Timer4A_Handler)
+    i.Timer4A_Init                           0x00001848   Section        0  motor.o(i.Timer4A_Init)
+    i.Timer5A_Handler                        0x0000189c   Section        0  texas.o(i.Timer5A_Handler)
+    i.UART_Init                              0x000018b4   Section        0  texas.o(i.UART_Init)
+    i.commandList                            0x00001950   Section        0  st7735.o(i.commandList)
+    commandList                              0x00001951   Thumb Code    86  st7735.o(i.commandList)
+    i.commonInit                             0x000019a8   Section        0  st7735.o(i.commonInit)
+    commonInit                               0x000019a9   Thumb Code   342  st7735.o(i.commonInit)
+    i.compareCodes                           0x00001b30   Section        0  lab5.o(i.compareCodes)
+    i.deselect                               0x00001b50   Section        0  st7735.o(i.deselect)
+    deselect                                 0x00001b51   Thumb Code    24  st7735.o(i.deselect)
+    i.drawCode                               0x00001b6c   Section        0  lab5.o(i.drawCode)
+    i.drawLockScreen                         0x00001bac   Section        0  lab5.o(i.drawLockScreen)
+    i.drawSetCodeScreen                      0x00001bd8   Section        0  lab5.o(i.drawSetCodeScreen)
+    i.drawTitle                              0x00001c08   Section        0  lab5.o(i.drawTitle)
+    i.drawUnlockScreen                       0x00001c68   Section        0  lab5.o(i.drawUnlockScreen)
+    i.main                                   0x00001cc4   Section        0  lab5.o(i.main)
+    i.processKey                             0x00001d7c   Section        0  lab5.o(i.processKey)
+    i.pushColor                              0x00001e5c   Section        0  st7735.o(i.pushColor)
+    pushColor                                0x00001e5d   Thumb Code    18  st7735.o(i.pushColor)
+    i.recordKey                              0x00001e70   Section        0  lab5.o(i.recordKey)
+    i.resetCode                              0x00001e8c   Section        0  lab5.o(i.resetCode)
+    i.scanKeypad                             0x00001ea0   Section        0  lab5.o(i.scanKeypad)
+    i.setAddrWindow                          0x00001ec0   Section        0  st7735.o(i.setAddrWindow)
+    setAddrWindow                            0x00001ec1   Thumb Code   106  st7735.o(i.setAddrWindow)
+    i.typeKey                                0x00001f34   Section        0  lab5.o(i.typeKey)
+    i.writecommand                           0x00001f40   Section        0  st7735.o(i.writecommand)
+    writecommand                             0x00001f41   Thumb Code    46  st7735.o(i.writecommand)
+    i.writedata                              0x00001f78   Section        0  st7735.o(i.writedata)
+    writedata                                0x00001f79   Thumb Code    26  st7735.o(i.writedata)
+    .constdata                               0x00001f9c   Section      128  music.o(.constdata)
+    .constdata                               0x0000201c   Section     2114  st7735.o(.constdata)
+    Font                                     0x0000201c   Data        1275  st7735.o(.constdata)
+    Bcmd                                     0x00002517   Data         103  st7735.o(.constdata)
+    Rcmd1                                    0x0000257e   Data          59  st7735.o(.constdata)
+    Rcmd2green                               0x000025b9   Data          13  st7735.o(.constdata)
+    Rcmd2red                                 0x000025c6   Data          13  st7735.o(.constdata)
+    Rcmd3                                    0x000025d3   Data          43  st7735.o(.constdata)
+    .data                                    0x20000000   Section       19  lab5.o(.data)
     .data                                    0x20000014   Section     1936  music.o(.data)
     isSongEnd                                0x20000016   Data           1  music.o(.data)
     melodyNoteIdx                            0x20000018   Data           2  music.o(.data)
@@ -712,12 +708,13 @@ Image Symbol Table
     _width                                   0x200007b2   Data           2  st7735.o(.data)
     _height                                  0x200007b4   Data           2  st7735.o(.data)
     .data                                    0x200007d0   Section        8  texas.o(.data)
-    .data                                    0x200007d8   Section        4  motor.o(.data)
-    .bss                                     0x200007dc   Section       96  libspace.o(.bss)
-    HEAP                                     0x20000840   Section        0  startup.o(HEAP)
-    STACK                                    0x20000840   Section     1024  startup.o(STACK)
-    HeapMem                                  0x20000840   Data           0  startup.o(HEAP)
-    StackMem                                 0x20000840   Data           0  startup.o(STACK)
+    .data                                    0x200007d8   Section        8  keypad.o(.data)
+    .data                                    0x200007e0   Section        4  motor.o(.data)
+    .bss                                     0x200007e4   Section       96  libspace.o(.bss)
+    HEAP                                     0x20000848   Section        0  startup.o(HEAP)
+    STACK                                    0x20000848   Section     1024  startup.o(STACK)
+    HeapMem                                  0x20000848   Data           0  startup.o(HEAP)
+    StackMem                                 0x20000848   Data           0  startup.o(STACK)
 
     Global Symbols
 
@@ -784,6 +781,7 @@ Image Symbol Table
     Fan0_Handler                             0x00000283   Thumb Code     0  startup.o(RESET)
     FlashCtl_Handler                         0x00000283   Thumb Code     0  startup.o(RESET)
     GPIOPortA_Handler                        0x00000283   Thumb Code     0  startup.o(RESET)
+    GPIOPortB_Handler                        0x00000283   Thumb Code     0  startup.o(RESET)
     GPIOPortC_Handler                        0x00000283   Thumb Code     0  startup.o(RESET)
     GPIOPortD_Handler                        0x00000283   Thumb Code     0  startup.o(RESET)
     GPIOPortE_Handler                        0x00000283   Thumb Code     0  startup.o(RESET)
@@ -946,79 +944,74 @@ Image Symbol Table
     DAC_Init                                 0x0000072d   Thumb Code    82  dac.o(i.DAC_Init)
     DAC_Out                                  0x00000789   Thumb Code    20  dac.o(i.DAC_Out)
     Delay1ms                                 0x000007a1   Thumb Code    32  st7735.o(i.Delay1ms)
-    GPIOArm                                  0x000007c1   Thumb Code    46  keypad.o(i.GPIOArm)
-    GPIOPortB_Handler                        0x000007fd   Thumb Code    30  keypad.o(i.GPIOPortB_Handler)
-    GPIOPortC_Init                           0x00000821   Thumb Code    96  motor.o(i.GPIOPortC_Init)
-    GPIOPortD_Init                           0x00000891   Thumb Code   228  dac.o(i.GPIOPortD_Init)
-    Lockbox_Init                             0x00000989   Thumb Code    16  lab5.o(i.Lockbox_Init)
-    LogicAnalyzer                            0x000009a1   Thumb Code    12  texas.o(i.LogicAnalyzer)
-    Motor_Init                               0x000009b5   Thumb Code    18  motor.o(i.Motor_Init)
-    Motor_Lock                               0x000009c7   Thumb Code    12  motor.o(i.Motor_Lock)
-    Motor_Unlock                             0x000009d3   Thumb Code    12  motor.o(i.Motor_Unlock)
-    Music_Init                               0x000009e1   Thumb Code   204  music.o(i.Music_Init)
-    Music_Play                               0x00000ae5   Thumb Code    22  music.o(i.Music_Play)
-    PLL_Init                                 0x00000b01   Thumb Code   120  pll.o(i.PLL_Init)
-    PWM0G_Duty                               0x00000b7d   Thumb Code     8  pwm.o(i.PWM0G_Duty)
-    PWM0G_Init                               0x00000b89   Thumb Code   176  pwm.o(i.PWM0G_Init)
-    PeriodicTask2_Init                       0x00000c55   Thumb Code   160  texas.o(i.PeriodicTask2_Init)
-    ST7735_DrawCharS                         0x00000d0d   Thumb Code   236  st7735.o(i.ST7735_DrawCharS)
-    ST7735_DrawPixel                         0x00000e05   Thumb Code    68  st7735.o(i.ST7735_DrawPixel)
-    ST7735_DrawString                        0x00000e51   Thumb Code    86  st7735.o(i.ST7735_DrawString)
-    ST7735_FillRect                          0x00000ea9   Thumb Code   168  st7735.o(i.ST7735_FillRect)
-    ST7735_FillScreen                        0x00000f59   Thumb Code    28  st7735.o(i.ST7735_FillScreen)
-    ST7735_InitR                             0x00000f7d   Thumb Code    90  st7735.o(i.ST7735_InitR)
-    ST7735_OutChar                           0x00000ff9   Thumb Code   176  st7735.o(i.ST7735_OutChar)
-    ST7735_OutString                         0x000010cd   Thumb Code    24  st7735.o(i.ST7735_OutString)
-    ST7735_SetCursor                         0x000010e5   Thumb Code    22  st7735.o(i.ST7735_SetCursor)
-    Scope                                    0x00001105   Thumb Code    12  texas.o(i.Scope)
-    SysTick_Handler                          0x00001119   Thumb Code   342  music.o(i.SysTick_Handler)
-    SysTick_Init                             0x000012a9   Thumb Code    42  music.o(i.SysTick_Init)
-    SysTick_Start                            0x000012d9   Thumb Code    10  music.o(i.SysTick_Start)
-    TExaS_Init                               0x000012e5   Thumb Code   136  texas.o(i.TExaS_Init)
-    Timer0A_Handler                          0x00001379   Thumb Code    14  keypad.o(i.Timer0A_Handler)
-    Timer0A_Init                             0x0000138d   Thumb Code    58  keypad.o(i.Timer0A_Init)
-    Timer1A_ChangePeriod                     0x000013d9   Thumb Code     6  music.o(i.Timer1A_ChangePeriod)
-    Timer1A_Handler                          0x000013e5   Thumb Code    76  music.o(i.Timer1A_Handler)
-    Timer1A_Init                             0x00001449   Thumb Code    72  music.o(i.Timer1A_Init)
-    Timer1A_Start                            0x000014a1   Thumb Code     8  music.o(i.Timer1A_Start)
-    Timer2A_ChangePeriod                     0x000014ad   Thumb Code     6  music.o(i.Timer2A_ChangePeriod)
-    Timer2A_Handler                          0x000014b9   Thumb Code    76  music.o(i.Timer2A_Handler)
-    Timer2A_Init                             0x0000151d   Thumb Code    72  music.o(i.Timer2A_Init)
-    Timer2A_Start                            0x00001575   Thumb Code     8  music.o(i.Timer2A_Start)
-    Timer3A_Handler                          0x00001581   Thumb Code    32  motor.o(i.Timer3A_Handler)
-    Timer4A_Handler                          0x000015b1   Thumb Code    22  motor.o(i.Timer4A_Handler)
-    Timer4A_Init                             0x000015d5   Thumb Code    68  motor.o(i.Timer4A_Init)
-    Timer5A_Handler                          0x00001629   Thumb Code    16  texas.o(i.Timer5A_Handler)
-    UART_Init                                0x00001641   Thumb Code   138  texas.o(i.UART_Init)
-    compareCodes                             0x000018bd   Thumb Code    32  lab5.o(i.compareCodes)
-    drawCode                                 0x000018f9   Thumb Code    52  lab5.o(i.drawCode)
-    drawLockScreen                           0x00001939   Thumb Code    28  lab5.o(i.drawLockScreen)
-    drawSetCodeScreen                        0x00001965   Thumb Code    28  lab5.o(i.drawSetCodeScreen)
-    drawTitle                                0x00001995   Thumb Code    46  lab5.o(i.drawTitle)
-    drawUnlockScreen                         0x000019f5   Thumb Code    50  lab5.o(i.drawUnlockScreen)
-    main                                     0x00001a51   Thumb Code   154  lab5.o(i.main)
-    processKey                               0x00001b01   Thumb Code   200  lab5.o(i.processKey)
-    readKeypad                               0x00001bf5   Thumb Code    24  lab5.o(i.readKeypad)
-    recordKey                                0x00001c15   Thumb Code    12  lab5.o(i.recordKey)
-    resetCode                                0x00001c29   Thumb Code    20  lab5.o(i.resetCode)
-    scan                                     0x00001c3d   Thumb Code    78  keypad.o(i.scan)
-    scanColumns                              0x00001c91   Thumb Code    80  keypad.o(i.scanColumns)
-    trumpet                                  0x00001db8   Data         128  music.o(.constdata)
-    smallCircle                              0x0000241a   Data          36  st7735.o(.constdata)
-    circle                                   0x0000243e   Data          60  st7735.o(.constdata)
-    dBfs                                     0x0000247a   Data         512  st7735.o(.constdata)
-    keypadMatrix                             0x0000267a   Data          12  keypad.o(.constdata)
-    Region$$Table$$Base                      0x00002688   Number         0  anon$$obj.o(Region$$Table)
-    Region$$Table$$Limit                     0x000026a8   Number         0  anon$$obj.o(Region$$Table)
+    GPIOPortB_Init                           0x000007c1   Thumb Code    94  keypad.o(i.GPIOPortB_Init)
+    GPIOPortC_Init                           0x00000835   Thumb Code    96  motor.o(i.GPIOPortC_Init)
+    GPIOPortD_Init                           0x000008a5   Thumb Code   228  dac.o(i.GPIOPortD_Init)
+    LaunchPad_Init                           0x0000099d   Thumb Code    70  launchpad.o(i.LaunchPad_Init)
+    Lockbox_Init                             0x000009f9   Thumb Code    16  lab5.o(i.Lockbox_Init)
+    LogicAnalyzer                            0x00000a11   Thumb Code    12  texas.o(i.LogicAnalyzer)
+    Motor_Init                               0x00000a25   Thumb Code    18  motor.o(i.Motor_Init)
+    Motor_Lock                               0x00000a37   Thumb Code    12  motor.o(i.Motor_Lock)
+    Motor_Unlock                             0x00000a43   Thumb Code    12  motor.o(i.Motor_Unlock)
+    Music_Init                               0x00000a51   Thumb Code   204  music.o(i.Music_Init)
+    PLL_Init                                 0x00000b55   Thumb Code   120  pll.o(i.PLL_Init)
+    PWM0G_Duty                               0x00000bd1   Thumb Code     8  pwm.o(i.PWM0G_Duty)
+    PWM0G_Init                               0x00000bdd   Thumb Code   176  pwm.o(i.PWM0G_Init)
+    PeriodicTask2_Init                       0x00000ca9   Thumb Code   160  texas.o(i.PeriodicTask2_Init)
+    ST7735_DrawCharS                         0x00000d61   Thumb Code   236  st7735.o(i.ST7735_DrawCharS)
+    ST7735_DrawPixel                         0x00000e59   Thumb Code    68  st7735.o(i.ST7735_DrawPixel)
+    ST7735_DrawString                        0x00000ea5   Thumb Code    86  st7735.o(i.ST7735_DrawString)
+    ST7735_FillRect                          0x00000efd   Thumb Code   168  st7735.o(i.ST7735_FillRect)
+    ST7735_FillScreen                        0x00000fad   Thumb Code    28  st7735.o(i.ST7735_FillScreen)
+    ST7735_InitR                             0x00000fd1   Thumb Code    90  st7735.o(i.ST7735_InitR)
+    ST7735_OutChar                           0x0000104d   Thumb Code   176  st7735.o(i.ST7735_OutChar)
+    ST7735_OutString                         0x00001121   Thumb Code    24  st7735.o(i.ST7735_OutString)
+    ST7735_SetCursor                         0x00001139   Thumb Code    22  st7735.o(i.ST7735_SetCursor)
+    Scope                                    0x00001159   Thumb Code    12  texas.o(i.Scope)
+    SysTick_Handler                          0x0000116d   Thumb Code   342  music.o(i.SysTick_Handler)
+    SysTick_Init                             0x000012fd   Thumb Code    42  music.o(i.SysTick_Init)
+    TExaS_Init                               0x0000132d   Thumb Code   136  texas.o(i.TExaS_Init)
+    Timer0A_Handler                          0x000013c1   Thumb Code   526  keypad.o(i.Timer0A_Handler)
+    Timer0A_Init                             0x000015f5   Thumb Code    92  keypad.o(i.Timer0A_Init)
+    Timer1A_ChangePeriod                     0x00001665   Thumb Code     6  music.o(i.Timer1A_ChangePeriod)
+    Timer1A_Handler                          0x00001671   Thumb Code    76  music.o(i.Timer1A_Handler)
+    Timer1A_Init                             0x000016d5   Thumb Code    72  music.o(i.Timer1A_Init)
+    Timer2A_ChangePeriod                     0x0000172d   Thumb Code     6  music.o(i.Timer2A_ChangePeriod)
+    Timer2A_Handler                          0x00001739   Thumb Code    76  music.o(i.Timer2A_Handler)
+    Timer2A_Init                             0x0000179d   Thumb Code    72  music.o(i.Timer2A_Init)
+    Timer3A_Handler                          0x000017f5   Thumb Code    32  motor.o(i.Timer3A_Handler)
+    Timer4A_Handler                          0x00001825   Thumb Code    22  motor.o(i.Timer4A_Handler)
+    Timer4A_Init                             0x00001849   Thumb Code    68  motor.o(i.Timer4A_Init)
+    Timer5A_Handler                          0x0000189d   Thumb Code    16  texas.o(i.Timer5A_Handler)
+    UART_Init                                0x000018b5   Thumb Code   138  texas.o(i.UART_Init)
+    compareCodes                             0x00001b31   Thumb Code    32  lab5.o(i.compareCodes)
+    drawCode                                 0x00001b6d   Thumb Code    52  lab5.o(i.drawCode)
+    drawLockScreen                           0x00001bad   Thumb Code    28  lab5.o(i.drawLockScreen)
+    drawSetCodeScreen                        0x00001bd9   Thumb Code    28  lab5.o(i.drawSetCodeScreen)
+    drawTitle                                0x00001c09   Thumb Code    46  lab5.o(i.drawTitle)
+    drawUnlockScreen                         0x00001c69   Thumb Code    50  lab5.o(i.drawUnlockScreen)
+    main                                     0x00001cc5   Thumb Code   160  lab5.o(i.main)
+    processKey                               0x00001d7d   Thumb Code   200  lab5.o(i.processKey)
+    recordKey                                0x00001e71   Thumb Code    16  lab5.o(i.recordKey)
+    resetCode                                0x00001e8d   Thumb Code    20  lab5.o(i.resetCode)
+    scanKeypad                               0x00001ea1   Thumb Code    24  lab5.o(i.scanKeypad)
+    typeKey                                  0x00001f35   Thumb Code    12  lab5.o(i.typeKey)
+    trumpet                                  0x00001f9c   Data         128  music.o(.constdata)
+    smallCircle                              0x000025fe   Data          36  st7735.o(.constdata)
+    circle                                   0x00002622   Data          60  st7735.o(.constdata)
+    dBfs                                     0x0000265e   Data         512  st7735.o(.constdata)
+    Region$$Table$$Base                      0x00002860   Number         0  anon$$obj.o(Region$$Table)
+    Region$$Table$$Limit                     0x00002880   Number         0  anon$$obj.o(Region$$Table)
     state                                    0x20000000   Data           1  lab5.o(.data)
-    secretCode                               0x20000001   Data           4  lab5.o(.data)
-    newCode                                  0x20000005   Data           4  lab5.o(.data)
-    enteredCode                              0x20000009   Data           4  lab5.o(.data)
-    digitIndex                               0x2000000d   Data           1  lab5.o(.data)
-    updateDisplayNeeded                      0x2000000e   Data           1  lab5.o(.data)
-    clearScreenNeeded                        0x2000000f   Data           1  lab5.o(.data)
-    key                                      0x20000010   Data           1  lab5.o(.data)
-    keypadDataReady                          0x20000011   Data           1  lab5.o(.data)
+    cursor                                   0x20000001   Data           1  lab5.o(.data)
+    secretCode                               0x20000002   Data           4  lab5.o(.data)
+    newCode                                  0x20000006   Data           4  lab5.o(.data)
+    enteredCode                              0x2000000a   Data           4  lab5.o(.data)
+    digitIndex                               0x2000000e   Data           1  lab5.o(.data)
+    updateDisplayNeeded                      0x2000000f   Data           1  lab5.o(.data)
+    clearScreenNeeded                        0x20000010   Data           1  lab5.o(.data)
+    key                                      0x20000011   Data           1  lab5.o(.data)
+    keyReady                                 0x20000012   Data           1  lab5.o(.data)
     isMusicPlaying                           0x20000014   Data           1  music.o(.data)
     lockStatus                               0x20000015   Data           1  music.o(.data)
     unlock_melody                            0x20000034   Data         864  music.o(.data)
@@ -1038,9 +1031,14 @@ Image Symbol Table
     lastj                                    0x200007cc   Data           4  st7735.o(.data)
     LogicData                                0x200007d0   Data           1  texas.o(.data)
     PeriodicTask2                            0x200007d4   Data           4  texas.o(.data)
-    Timer4Period                             0x200007d8   Data           4  motor.o(.data)
-    __libspace_start                         0x200007dc   Data          96  libspace.o(.bss)
-    __temporary_stack_top$libspace           0x2000083c   Data           0  libspace.o(.bss)
+    row                                      0x200007d8   Data           1  keypad.o(.data)
+    character                                0x200007d9   Data           1  keypad.o(.data)
+    lastPressed                              0x200007da   Data           1  keypad.o(.data)
+    pressed                                  0x200007db   Data           1  keypad.o(.data)
+    TypeKey                                  0x200007dc   Data           4  keypad.o(.data)
+    Timer4Period                             0x200007e0   Data           4  motor.o(.data)
+    __libspace_start                         0x200007e4   Data          96  libspace.o(.bss)
+    __temporary_stack_top$libspace           0x20000844   Data           0  libspace.o(.bss)
 
 
 
@@ -1050,174 +1048,168 @@ Memory Map of the image
 
   Image Entry point : 0x0000026d
 
-  Load Region LR_1 (Base: 0x00000000, Size: 0x00002e84, Max: 0xffffffff, ABSOLUTE, COMPRESSED[0x0000278c])
+  Load Region LR_1 (Base: 0x00000000, Size: 0x00003064, Max: 0xffffffff, ABSOLUTE, COMPRESSED[0x00002964])
 
-    Execution Region ER_RO (Exec base: 0x00000000, Load base: 0x00000000, Size: 0x000026a8, Max: 0xffffffff, ABSOLUTE)
+    Execution Region ER_RO (Exec base: 0x00000000, Load base: 0x00000000, Size: 0x00002880, Max: 0xffffffff, ABSOLUTE)
 
     Exec Addr    Load Addr    Size         Type   Attr      Idx    E Section Name        Object
 
     0x00000000   0x00000000   0x00000284   Code   RO            3  * RESET               startup.o
-    0x00000284   0x00000284   0x00000008   Code   RO         1141  * !!!main             c_w.l(__main.o)
-    0x0000028c   0x0000028c   0x00000034   Code   RO         1302    !!!scatter          c_w.l(__scatter.o)
-    0x000002c0   0x000002c0   0x0000005a   Code   RO         1300    !!dczerorl2         c_w.l(__dczerorl2.o)
+    0x00000284   0x00000284   0x00000008   Code   RO         1124  * !!!main             c_w.l(__main.o)
+    0x0000028c   0x0000028c   0x00000034   Code   RO         1285    !!!scatter          c_w.l(__scatter.o)
+    0x000002c0   0x000002c0   0x0000005a   Code   RO         1283    !!dczerorl2         c_w.l(__dczerorl2.o)
     0x0000031a   0x0000031a   0x00000002   PAD
-    0x0000031c   0x0000031c   0x0000001c   Code   RO         1304    !!handler_zi        c_w.l(__scatter_zi.o)
-    0x00000338   0x00000338   0x00000002   Code   RO         1168    .ARM.Collect$$libinit$$00000000  c_w.l(libinit.o)
-    0x0000033a   0x0000033a   0x00000000   Code   RO         1175    .ARM.Collect$$libinit$$00000002  c_w.l(libinit2.o)
-    0x0000033a   0x0000033a   0x00000000   Code   RO         1177    .ARM.Collect$$libinit$$00000004  c_w.l(libinit2.o)
-    0x0000033a   0x0000033a   0x00000000   Code   RO         1180    .ARM.Collect$$libinit$$0000000A  c_w.l(libinit2.o)
-    0x0000033a   0x0000033a   0x00000000   Code   RO         1182    .ARM.Collect$$libinit$$0000000C  c_w.l(libinit2.o)
-    0x0000033a   0x0000033a   0x00000000   Code   RO         1184    .ARM.Collect$$libinit$$0000000E  c_w.l(libinit2.o)
-    0x0000033a   0x0000033a   0x00000000   Code   RO         1187    .ARM.Collect$$libinit$$00000011  c_w.l(libinit2.o)
-    0x0000033a   0x0000033a   0x00000000   Code   RO         1189    .ARM.Collect$$libinit$$00000013  c_w.l(libinit2.o)
-    0x0000033a   0x0000033a   0x00000000   Code   RO         1191    .ARM.Collect$$libinit$$00000015  c_w.l(libinit2.o)
-    0x0000033a   0x0000033a   0x00000000   Code   RO         1193    .ARM.Collect$$libinit$$00000017  c_w.l(libinit2.o)
-    0x0000033a   0x0000033a   0x00000000   Code   RO         1195    .ARM.Collect$$libinit$$00000019  c_w.l(libinit2.o)
-    0x0000033a   0x0000033a   0x00000000   Code   RO         1197    .ARM.Collect$$libinit$$0000001B  c_w.l(libinit2.o)
-    0x0000033a   0x0000033a   0x00000000   Code   RO         1199    .ARM.Collect$$libinit$$0000001D  c_w.l(libinit2.o)
-    0x0000033a   0x0000033a   0x00000000   Code   RO         1201    .ARM.Collect$$libinit$$0000001F  c_w.l(libinit2.o)
-    0x0000033a   0x0000033a   0x00000000   Code   RO         1203    .ARM.Collect$$libinit$$00000021  c_w.l(libinit2.o)
-    0x0000033a   0x0000033a   0x00000000   Code   RO         1205    .ARM.Collect$$libinit$$00000023  c_w.l(libinit2.o)
-    0x0000033a   0x0000033a   0x00000000   Code   RO         1207    .ARM.Collect$$libinit$$00000025  c_w.l(libinit2.o)
-    0x0000033a   0x0000033a   0x00000000   Code   RO         1211    .ARM.Collect$$libinit$$0000002C  c_w.l(libinit2.o)
-    0x0000033a   0x0000033a   0x00000000   Code   RO         1213    .ARM.Collect$$libinit$$0000002E  c_w.l(libinit2.o)
-    0x0000033a   0x0000033a   0x00000000   Code   RO         1215    .ARM.Collect$$libinit$$00000030  c_w.l(libinit2.o)
-    0x0000033a   0x0000033a   0x00000000   Code   RO         1217    .ARM.Collect$$libinit$$00000032  c_w.l(libinit2.o)
-    0x0000033a   0x0000033a   0x00000002   Code   RO         1218    .ARM.Collect$$libinit$$00000033  c_w.l(libinit2.o)
-    0x0000033c   0x0000033c   0x00000002   Code   RO         1238    .ARM.Collect$$libshutdown$$00000000  c_w.l(libshutdown.o)
-    0x0000033e   0x0000033e   0x00000000   Code   RO         1251    .ARM.Collect$$libshutdown$$00000002  c_w.l(libshutdown2.o)
-    0x0000033e   0x0000033e   0x00000000   Code   RO         1253    .ARM.Collect$$libshutdown$$00000004  c_w.l(libshutdown2.o)
-    0x0000033e   0x0000033e   0x00000000   Code   RO         1255    .ARM.Collect$$libshutdown$$00000006  c_w.l(libshutdown2.o)
-    0x0000033e   0x0000033e   0x00000000   Code   RO         1258    .ARM.Collect$$libshutdown$$00000009  c_w.l(libshutdown2.o)
-    0x0000033e   0x0000033e   0x00000000   Code   RO         1261    .ARM.Collect$$libshutdown$$0000000C  c_w.l(libshutdown2.o)
-    0x0000033e   0x0000033e   0x00000000   Code   RO         1263    .ARM.Collect$$libshutdown$$0000000E  c_w.l(libshutdown2.o)
-    0x0000033e   0x0000033e   0x00000000   Code   RO         1266    .ARM.Collect$$libshutdown$$00000011  c_w.l(libshutdown2.o)
-    0x0000033e   0x0000033e   0x00000002   Code   RO         1267    .ARM.Collect$$libshutdown$$00000012  c_w.l(libshutdown2.o)
-    0x00000340   0x00000340   0x00000000   Code   RO         1143    .ARM.Collect$$rtentry$$00000000  c_w.l(__rtentry.o)
-    0x00000340   0x00000340   0x00000000   Code   RO         1145    .ARM.Collect$$rtentry$$00000002  c_w.l(__rtentry2.o)
-    0x00000340   0x00000340   0x00000006   Code   RO         1157    .ARM.Collect$$rtentry$$00000004  c_w.l(__rtentry4.o)
-    0x00000346   0x00000346   0x00000000   Code   RO         1147    .ARM.Collect$$rtentry$$00000009  c_w.l(__rtentry2.o)
-    0x00000346   0x00000346   0x00000004   Code   RO         1148    .ARM.Collect$$rtentry$$0000000A  c_w.l(__rtentry2.o)
-    0x0000034a   0x0000034a   0x00000000   Code   RO         1150    .ARM.Collect$$rtentry$$0000000C  c_w.l(__rtentry2.o)
-    0x0000034a   0x0000034a   0x00000008   Code   RO         1151    .ARM.Collect$$rtentry$$0000000D  c_w.l(__rtentry2.o)
-    0x00000352   0x00000352   0x00000002   Code   RO         1172    .ARM.Collect$$rtexit$$00000000  c_w.l(rtexit.o)
-    0x00000354   0x00000354   0x00000000   Code   RO         1220    .ARM.Collect$$rtexit$$00000002  c_w.l(rtexit2.o)
-    0x00000354   0x00000354   0x00000004   Code   RO         1221    .ARM.Collect$$rtexit$$00000003  c_w.l(rtexit2.o)
-    0x00000358   0x00000358   0x00000006   Code   RO         1222    .ARM.Collect$$rtexit$$00000004  c_w.l(rtexit2.o)
+    0x0000031c   0x0000031c   0x0000001c   Code   RO         1287    !!handler_zi        c_w.l(__scatter_zi.o)
+    0x00000338   0x00000338   0x00000002   Code   RO         1151    .ARM.Collect$$libinit$$00000000  c_w.l(libinit.o)
+    0x0000033a   0x0000033a   0x00000000   Code   RO         1158    .ARM.Collect$$libinit$$00000002  c_w.l(libinit2.o)
+    0x0000033a   0x0000033a   0x00000000   Code   RO         1160    .ARM.Collect$$libinit$$00000004  c_w.l(libinit2.o)
+    0x0000033a   0x0000033a   0x00000000   Code   RO         1163    .ARM.Collect$$libinit$$0000000A  c_w.l(libinit2.o)
+    0x0000033a   0x0000033a   0x00000000   Code   RO         1165    .ARM.Collect$$libinit$$0000000C  c_w.l(libinit2.o)
+    0x0000033a   0x0000033a   0x00000000   Code   RO         1167    .ARM.Collect$$libinit$$0000000E  c_w.l(libinit2.o)
+    0x0000033a   0x0000033a   0x00000000   Code   RO         1170    .ARM.Collect$$libinit$$00000011  c_w.l(libinit2.o)
+    0x0000033a   0x0000033a   0x00000000   Code   RO         1172    .ARM.Collect$$libinit$$00000013  c_w.l(libinit2.o)
+    0x0000033a   0x0000033a   0x00000000   Code   RO         1174    .ARM.Collect$$libinit$$00000015  c_w.l(libinit2.o)
+    0x0000033a   0x0000033a   0x00000000   Code   RO         1176    .ARM.Collect$$libinit$$00000017  c_w.l(libinit2.o)
+    0x0000033a   0x0000033a   0x00000000   Code   RO         1178    .ARM.Collect$$libinit$$00000019  c_w.l(libinit2.o)
+    0x0000033a   0x0000033a   0x00000000   Code   RO         1180    .ARM.Collect$$libinit$$0000001B  c_w.l(libinit2.o)
+    0x0000033a   0x0000033a   0x00000000   Code   RO         1182    .ARM.Collect$$libinit$$0000001D  c_w.l(libinit2.o)
+    0x0000033a   0x0000033a   0x00000000   Code   RO         1184    .ARM.Collect$$libinit$$0000001F  c_w.l(libinit2.o)
+    0x0000033a   0x0000033a   0x00000000   Code   RO         1186    .ARM.Collect$$libinit$$00000021  c_w.l(libinit2.o)
+    0x0000033a   0x0000033a   0x00000000   Code   RO         1188    .ARM.Collect$$libinit$$00000023  c_w.l(libinit2.o)
+    0x0000033a   0x0000033a   0x00000000   Code   RO         1190    .ARM.Collect$$libinit$$00000025  c_w.l(libinit2.o)
+    0x0000033a   0x0000033a   0x00000000   Code   RO         1194    .ARM.Collect$$libinit$$0000002C  c_w.l(libinit2.o)
+    0x0000033a   0x0000033a   0x00000000   Code   RO         1196    .ARM.Collect$$libinit$$0000002E  c_w.l(libinit2.o)
+    0x0000033a   0x0000033a   0x00000000   Code   RO         1198    .ARM.Collect$$libinit$$00000030  c_w.l(libinit2.o)
+    0x0000033a   0x0000033a   0x00000000   Code   RO         1200    .ARM.Collect$$libinit$$00000032  c_w.l(libinit2.o)
+    0x0000033a   0x0000033a   0x00000002   Code   RO         1201    .ARM.Collect$$libinit$$00000033  c_w.l(libinit2.o)
+    0x0000033c   0x0000033c   0x00000002   Code   RO         1221    .ARM.Collect$$libshutdown$$00000000  c_w.l(libshutdown.o)
+    0x0000033e   0x0000033e   0x00000000   Code   RO         1234    .ARM.Collect$$libshutdown$$00000002  c_w.l(libshutdown2.o)
+    0x0000033e   0x0000033e   0x00000000   Code   RO         1236    .ARM.Collect$$libshutdown$$00000004  c_w.l(libshutdown2.o)
+    0x0000033e   0x0000033e   0x00000000   Code   RO         1238    .ARM.Collect$$libshutdown$$00000006  c_w.l(libshutdown2.o)
+    0x0000033e   0x0000033e   0x00000000   Code   RO         1241    .ARM.Collect$$libshutdown$$00000009  c_w.l(libshutdown2.o)
+    0x0000033e   0x0000033e   0x00000000   Code   RO         1244    .ARM.Collect$$libshutdown$$0000000C  c_w.l(libshutdown2.o)
+    0x0000033e   0x0000033e   0x00000000   Code   RO         1246    .ARM.Collect$$libshutdown$$0000000E  c_w.l(libshutdown2.o)
+    0x0000033e   0x0000033e   0x00000000   Code   RO         1249    .ARM.Collect$$libshutdown$$00000011  c_w.l(libshutdown2.o)
+    0x0000033e   0x0000033e   0x00000002   Code   RO         1250    .ARM.Collect$$libshutdown$$00000012  c_w.l(libshutdown2.o)
+    0x00000340   0x00000340   0x00000000   Code   RO         1126    .ARM.Collect$$rtentry$$00000000  c_w.l(__rtentry.o)
+    0x00000340   0x00000340   0x00000000   Code   RO         1128    .ARM.Collect$$rtentry$$00000002  c_w.l(__rtentry2.o)
+    0x00000340   0x00000340   0x00000006   Code   RO         1140    .ARM.Collect$$rtentry$$00000004  c_w.l(__rtentry4.o)
+    0x00000346   0x00000346   0x00000000   Code   RO         1130    .ARM.Collect$$rtentry$$00000009  c_w.l(__rtentry2.o)
+    0x00000346   0x00000346   0x00000004   Code   RO         1131    .ARM.Collect$$rtentry$$0000000A  c_w.l(__rtentry2.o)
+    0x0000034a   0x0000034a   0x00000000   Code   RO         1133    .ARM.Collect$$rtentry$$0000000C  c_w.l(__rtentry2.o)
+    0x0000034a   0x0000034a   0x00000008   Code   RO         1134    .ARM.Collect$$rtentry$$0000000D  c_w.l(__rtentry2.o)
+    0x00000352   0x00000352   0x00000002   Code   RO         1155    .ARM.Collect$$rtexit$$00000000  c_w.l(rtexit.o)
+    0x00000354   0x00000354   0x00000000   Code   RO         1203    .ARM.Collect$$rtexit$$00000002  c_w.l(rtexit2.o)
+    0x00000354   0x00000354   0x00000004   Code   RO         1204    .ARM.Collect$$rtexit$$00000003  c_w.l(rtexit2.o)
+    0x00000358   0x00000358   0x00000006   Code   RO         1205    .ARM.Collect$$rtexit$$00000004  c_w.l(rtexit2.o)
     0x0000035e   0x0000035e   0x00000002   PAD
     0x00000360   0x00000360   0x00000030   Code   RO            4    .text               startup.o
-    0x00000390   0x00000390   0x00000006   Code   RO         1139    .text               c_w.l(heapauxi.o)
-    0x00000396   0x00000396   0x0000004a   Code   RO         1159    .text               c_w.l(sys_stackheap_outer.o)
-    0x000003e0   0x000003e0   0x00000012   Code   RO         1161    .text               c_w.l(exit.o)
+    0x00000390   0x00000390   0x00000006   Code   RO         1122    .text               c_w.l(heapauxi.o)
+    0x00000396   0x00000396   0x0000004a   Code   RO         1142    .text               c_w.l(sys_stackheap_outer.o)
+    0x000003e0   0x000003e0   0x00000012   Code   RO         1144    .text               c_w.l(exit.o)
     0x000003f2   0x000003f2   0x00000002   PAD
-    0x000003f4   0x000003f4   0x00000008   Code   RO         1169    .text               c_w.l(libspace.o)
-    0x000003fc   0x000003fc   0x0000000c   Code   RO         1230    .text               c_w.l(sys_exit.o)
-    0x00000408   0x00000408   0x00000002   Code   RO         1241    .text               c_w.l(use_no_semi.o)
-    0x0000040a   0x0000040a   0x00000000   Code   RO         1243    .text               c_w.l(indicate_semi.o)
+    0x000003f4   0x000003f4   0x00000008   Code   RO         1152    .text               c_w.l(libspace.o)
+    0x000003fc   0x000003fc   0x0000000c   Code   RO         1213    .text               c_w.l(sys_exit.o)
+    0x00000408   0x00000408   0x00000002   Code   RO         1224    .text               c_w.l(use_no_semi.o)
+    0x0000040a   0x0000040a   0x00000000   Code   RO         1226    .text               c_w.l(indicate_semi.o)
     0x0000040a   0x0000040a   0x00000002   PAD
-    0x0000040c   0x0000040c   0x000000c8   Code   RO          707    i.ADC1_Init         texas.o
-    0x000004d4   0x000004d4   0x000000c8   Code   RO          708    i.ADC1_Init_PB5     texas.o
-    0x0000059c   0x0000059c   0x000000c8   Code   RO          709    i.ADC1_Init_PD2     texas.o
-    0x00000664   0x00000664   0x000000c8   Code   RO          710    i.ADC1_Init_PE2     texas.o
-    0x0000072c   0x0000072c   0x0000005c   Code   RO          194    i.DAC_Init          dac.o
-    0x00000788   0x00000788   0x00000018   Code   RO          195    i.DAC_Out           dac.o
-    0x000007a0   0x000007a0   0x00000020   Code   RO          339    i.Delay1ms          st7735.o
-    0x000007c0   0x000007c0   0x0000003c   Code   RO          957    i.GPIOArm           keypad.o
-    0x000007fc   0x000007fc   0x00000024   Code   RO          958    i.GPIOPortB_Handler  keypad.o
-    0x00000820   0x00000820   0x00000070   Code   RO         1038    i.GPIOPortC_Init    motor.o
-    0x00000890   0x00000890   0x000000f8   Code   RO          196    i.GPIOPortD_Init    dac.o
-    0x00000988   0x00000988   0x00000018   Code   RO           81    i.Lockbox_Init      lab5.o
-    0x000009a0   0x000009a0   0x00000014   Code   RO          711    i.LogicAnalyzer     texas.o
-    0x000009b4   0x000009b4   0x00000012   Code   RO         1039    i.Motor_Init        motor.o
-    0x000009c6   0x000009c6   0x0000000c   Code   RO         1040    i.Motor_Lock        motor.o
-    0x000009d2   0x000009d2   0x0000000c   Code   RO         1041    i.Motor_Unlock      motor.o
-    0x000009de   0x000009de   0x00000002   PAD
-    0x000009e0   0x000009e0   0x00000104   Code   RO          218    i.Music_Init        music.o
-    0x00000ae4   0x00000ae4   0x0000001c   Code   RO          219    i.Music_Play        music.o
-    0x00000b00   0x00000b00   0x0000007c   Code   RO           12    i.PLL_Init          pll.o
-    0x00000b7c   0x00000b7c   0x0000000c   Code   RO         1099    i.PWM0G_Duty        pwm.o
-    0x00000b88   0x00000b88   0x000000cc   Code   RO         1100    i.PWM0G_Init        pwm.o
-    0x00000c54   0x00000c54   0x000000b8   Code   RO          712    i.PeriodicTask2_Init  texas.o
-    0x00000d0c   0x00000d0c   0x000000f8   Code   RO          348    i.ST7735_DrawCharS  st7735.o
-    0x00000e04   0x00000e04   0x0000004c   Code   RO          352    i.ST7735_DrawPixel  st7735.o
-    0x00000e50   0x00000e50   0x00000056   Code   RO          354    i.ST7735_DrawString  st7735.o
-    0x00000ea6   0x00000ea6   0x00000002   PAD
-    0x00000ea8   0x00000ea8   0x000000b0   Code   RO          355    i.ST7735_FillRect   st7735.o
-    0x00000f58   0x00000f58   0x00000024   Code   RO          356    i.ST7735_FillScreen  st7735.o
-    0x00000f7c   0x00000f7c   0x0000007c   Code   RO          358    i.ST7735_InitR      st7735.o
-    0x00000ff8   0x00000ff8   0x000000d4   Code   RO          361    i.ST7735_OutChar    st7735.o
-    0x000010cc   0x000010cc   0x00000018   Code   RO          362    i.ST7735_OutString  st7735.o
-    0x000010e4   0x000010e4   0x00000020   Code   RO          374    i.ST7735_SetCursor  st7735.o
-    0x00001104   0x00001104   0x00000014   Code   RO          714    i.Scope             texas.o
-    0x00001118   0x00001118   0x00000190   Code   RO          222    i.SysTick_Handler   music.o
-    0x000012a8   0x000012a8   0x00000030   Code   RO          223    i.SysTick_Init      music.o
-    0x000012d8   0x000012d8   0x0000000a   Code   RO          224    i.SysTick_Start     music.o
-    0x000012e2   0x000012e2   0x00000002   PAD
-    0x000012e4   0x000012e4   0x00000094   Code   RO          722    i.TExaS_Init        texas.o
-    0x00001378   0x00001378   0x00000014   Code   RO          960    i.Timer0A_Handler   keypad.o
-    0x0000138c   0x0000138c   0x0000004c   Code   RO          961    i.Timer0A_Init      keypad.o
-    0x000013d8   0x000013d8   0x0000000c   Code   RO          226    i.Timer1A_ChangePeriod  music.o
-    0x000013e4   0x000013e4   0x00000064   Code   RO          227    i.Timer1A_Handler   music.o
-    0x00001448   0x00001448   0x00000058   Code   RO          228    i.Timer1A_Init      music.o
-    0x000014a0   0x000014a0   0x0000000c   Code   RO          229    i.Timer1A_Start     music.o
-    0x000014ac   0x000014ac   0x0000000c   Code   RO          231    i.Timer2A_ChangePeriod  music.o
-    0x000014b8   0x000014b8   0x00000064   Code   RO          232    i.Timer2A_Handler   music.o
-    0x0000151c   0x0000151c   0x00000058   Code   RO          233    i.Timer2A_Init      music.o
-    0x00001574   0x00001574   0x0000000c   Code   RO          234    i.Timer2A_Start     music.o
-    0x00001580   0x00001580   0x00000030   Code   RO         1042    i.Timer3A_Handler   motor.o
-    0x000015b0   0x000015b0   0x00000024   Code   RO         1044    i.Timer4A_Handler   motor.o
-    0x000015d4   0x000015d4   0x00000054   Code   RO         1045    i.Timer4A_Init      motor.o
-    0x00001628   0x00001628   0x00000018   Code   RO          739    i.Timer5A_Handler   texas.o
-    0x00001640   0x00001640   0x0000009c   Code   RO          741    i.UART_Init         texas.o
-    0x000016dc   0x000016dc   0x00000056   Code   RO          383    i.commandList       st7735.o
-    0x00001732   0x00001732   0x00000002   PAD
-    0x00001734   0x00001734   0x00000188   Code   RO          384    i.commonInit        st7735.o
-    0x000018bc   0x000018bc   0x00000020   Code   RO           82    i.compareCodes      lab5.o
-    0x000018dc   0x000018dc   0x0000001c   Code   RO          385    i.deselect          st7735.o
-    0x000018f8   0x000018f8   0x00000040   Code   RO           83    i.drawCode          lab5.o
-    0x00001938   0x00001938   0x0000002c   Code   RO           84    i.drawLockScreen    lab5.o
-    0x00001964   0x00001964   0x00000030   Code   RO           85    i.drawSetCodeScreen  lab5.o
-    0x00001994   0x00001994   0x00000060   Code   RO           86    i.drawTitle         lab5.o
-    0x000019f4   0x000019f4   0x0000005c   Code   RO           87    i.drawUnlockScreen  lab5.o
-    0x00001a50   0x00001a50   0x000000b0   Code   RO           88    i.main              lab5.o
-    0x00001b00   0x00001b00   0x000000e0   Code   RO           89    i.processKey        lab5.o
-    0x00001be0   0x00001be0   0x00000012   Code   RO          394    i.pushColor         st7735.o
-    0x00001bf2   0x00001bf2   0x00000002   PAD
-    0x00001bf4   0x00001bf4   0x00000020   Code   RO           90    i.readKeypad        lab5.o
-    0x00001c14   0x00001c14   0x00000014   Code   RO           91    i.recordKey         lab5.o
-    0x00001c28   0x00001c28   0x00000014   Code   RO           92    i.resetCode         lab5.o
-    0x00001c3c   0x00001c3c   0x00000054   Code   RO          962    i.scan              keypad.o
-    0x00001c90   0x00001c90   0x00000058   Code   RO          963    i.scanColumns       keypad.o
-    0x00001ce8   0x00001ce8   0x00000074   Code   RO          395    i.setAddrWindow     st7735.o
-    0x00001d5c   0x00001d5c   0x00000038   Code   RO          396    i.writecommand      st7735.o
-    0x00001d94   0x00001d94   0x00000024   Code   RO          397    i.writedata         st7735.o
-    0x00001db8   0x00001db8   0x00000080   Data   RO          236    .constdata          music.o
-    0x00001e38   0x00001e38   0x00000842   Data   RO          399    .constdata          st7735.o
-    0x0000267a   0x0000267a   0x0000000c   Data   RO          964    .constdata          keypad.o
-    0x00002686   0x00002686   0x00000002   PAD
-    0x00002688   0x00002688   0x00000020   Data   RO         1298    Region$$Table       anon$$obj.o
+    0x0000040c   0x0000040c   0x000000c8   Code   RO          713    i.ADC1_Init         texas.o
+    0x000004d4   0x000004d4   0x000000c8   Code   RO          714    i.ADC1_Init_PB5     texas.o
+    0x0000059c   0x0000059c   0x000000c8   Code   RO          715    i.ADC1_Init_PD2     texas.o
+    0x00000664   0x00000664   0x000000c8   Code   RO          716    i.ADC1_Init_PE2     texas.o
+    0x0000072c   0x0000072c   0x0000005c   Code   RO          200    i.DAC_Init          dac.o
+    0x00000788   0x00000788   0x00000018   Code   RO          201    i.DAC_Out           dac.o
+    0x000007a0   0x000007a0   0x00000020   Code   RO          345    i.Delay1ms          st7735.o
+    0x000007c0   0x000007c0   0x00000074   Code   RO          963    i.GPIOPortB_Init    keypad.o
+    0x00000834   0x00000834   0x00000070   Code   RO         1021    i.GPIOPortC_Init    motor.o
+    0x000008a4   0x000008a4   0x000000f8   Code   RO          202    i.GPIOPortD_Init    dac.o
+    0x0000099c   0x0000099c   0x0000005c   Code   RO           35    i.LaunchPad_Init    launchpad.o
+    0x000009f8   0x000009f8   0x00000018   Code   RO           81    i.Lockbox_Init      lab5.o
+    0x00000a10   0x00000a10   0x00000014   Code   RO          717    i.LogicAnalyzer     texas.o
+    0x00000a24   0x00000a24   0x00000012   Code   RO         1022    i.Motor_Init        motor.o
+    0x00000a36   0x00000a36   0x0000000c   Code   RO         1023    i.Motor_Lock        motor.o
+    0x00000a42   0x00000a42   0x0000000c   Code   RO         1024    i.Motor_Unlock      motor.o
+    0x00000a4e   0x00000a4e   0x00000002   PAD
+    0x00000a50   0x00000a50   0x00000104   Code   RO          224    i.Music_Init        music.o
+    0x00000b54   0x00000b54   0x0000007c   Code   RO           12    i.PLL_Init          pll.o
+    0x00000bd0   0x00000bd0   0x0000000c   Code   RO         1082    i.PWM0G_Duty        pwm.o
+    0x00000bdc   0x00000bdc   0x000000cc   Code   RO         1083    i.PWM0G_Init        pwm.o
+    0x00000ca8   0x00000ca8   0x000000b8   Code   RO          718    i.PeriodicTask2_Init  texas.o
+    0x00000d60   0x00000d60   0x000000f8   Code   RO          354    i.ST7735_DrawCharS  st7735.o
+    0x00000e58   0x00000e58   0x0000004c   Code   RO          358    i.ST7735_DrawPixel  st7735.o
+    0x00000ea4   0x00000ea4   0x00000056   Code   RO          360    i.ST7735_DrawString  st7735.o
+    0x00000efa   0x00000efa   0x00000002   PAD
+    0x00000efc   0x00000efc   0x000000b0   Code   RO          361    i.ST7735_FillRect   st7735.o
+    0x00000fac   0x00000fac   0x00000024   Code   RO          362    i.ST7735_FillScreen  st7735.o
+    0x00000fd0   0x00000fd0   0x0000007c   Code   RO          364    i.ST7735_InitR      st7735.o
+    0x0000104c   0x0000104c   0x000000d4   Code   RO          367    i.ST7735_OutChar    st7735.o
+    0x00001120   0x00001120   0x00000018   Code   RO          368    i.ST7735_OutString  st7735.o
+    0x00001138   0x00001138   0x00000020   Code   RO          380    i.ST7735_SetCursor  st7735.o
+    0x00001158   0x00001158   0x00000014   Code   RO          720    i.Scope             texas.o
+    0x0000116c   0x0000116c   0x00000190   Code   RO          228    i.SysTick_Handler   music.o
+    0x000012fc   0x000012fc   0x00000030   Code   RO          229    i.SysTick_Init      music.o
+    0x0000132c   0x0000132c   0x00000094   Code   RO          728    i.TExaS_Init        texas.o
+    0x000013c0   0x000013c0   0x00000234   Code   RO          964    i.Timer0A_Handler   keypad.o
+    0x000015f4   0x000015f4   0x00000070   Code   RO          965    i.Timer0A_Init      keypad.o
+    0x00001664   0x00001664   0x0000000c   Code   RO          232    i.Timer1A_ChangePeriod  music.o
+    0x00001670   0x00001670   0x00000064   Code   RO          233    i.Timer1A_Handler   music.o
+    0x000016d4   0x000016d4   0x00000058   Code   RO          234    i.Timer1A_Init      music.o
+    0x0000172c   0x0000172c   0x0000000c   Code   RO          237    i.Timer2A_ChangePeriod  music.o
+    0x00001738   0x00001738   0x00000064   Code   RO          238    i.Timer2A_Handler   music.o
+    0x0000179c   0x0000179c   0x00000058   Code   RO          239    i.Timer2A_Init      music.o
+    0x000017f4   0x000017f4   0x00000030   Code   RO         1025    i.Timer3A_Handler   motor.o
+    0x00001824   0x00001824   0x00000024   Code   RO         1027    i.Timer4A_Handler   motor.o
+    0x00001848   0x00001848   0x00000054   Code   RO         1028    i.Timer4A_Init      motor.o
+    0x0000189c   0x0000189c   0x00000018   Code   RO          745    i.Timer5A_Handler   texas.o
+    0x000018b4   0x000018b4   0x0000009c   Code   RO          747    i.UART_Init         texas.o
+    0x00001950   0x00001950   0x00000056   Code   RO          389    i.commandList       st7735.o
+    0x000019a6   0x000019a6   0x00000002   PAD
+    0x000019a8   0x000019a8   0x00000188   Code   RO          390    i.commonInit        st7735.o
+    0x00001b30   0x00001b30   0x00000020   Code   RO           82    i.compareCodes      lab5.o
+    0x00001b50   0x00001b50   0x0000001c   Code   RO          391    i.deselect          st7735.o
+    0x00001b6c   0x00001b6c   0x00000040   Code   RO           83    i.drawCode          lab5.o
+    0x00001bac   0x00001bac   0x0000002c   Code   RO           84    i.drawLockScreen    lab5.o
+    0x00001bd8   0x00001bd8   0x00000030   Code   RO           85    i.drawSetCodeScreen  lab5.o
+    0x00001c08   0x00001c08   0x00000060   Code   RO           86    i.drawTitle         lab5.o
+    0x00001c68   0x00001c68   0x0000005c   Code   RO           87    i.drawUnlockScreen  lab5.o
+    0x00001cc4   0x00001cc4   0x000000b8   Code   RO           88    i.main              lab5.o
+    0x00001d7c   0x00001d7c   0x000000e0   Code   RO           89    i.processKey        lab5.o
+    0x00001e5c   0x00001e5c   0x00000012   Code   RO          400    i.pushColor         st7735.o
+    0x00001e6e   0x00001e6e   0x00000002   PAD
+    0x00001e70   0x00001e70   0x0000001c   Code   RO           90    i.recordKey         lab5.o
+    0x00001e8c   0x00001e8c   0x00000014   Code   RO           91    i.resetCode         lab5.o
+    0x00001ea0   0x00001ea0   0x00000020   Code   RO           92    i.scanKeypad        lab5.o
+    0x00001ec0   0x00001ec0   0x00000074   Code   RO          401    i.setAddrWindow     st7735.o
+    0x00001f34   0x00001f34   0x0000000c   Code   RO           93    i.typeKey           lab5.o
+    0x00001f40   0x00001f40   0x00000038   Code   RO          402    i.writecommand      st7735.o
+    0x00001f78   0x00001f78   0x00000024   Code   RO          403    i.writedata         st7735.o
+    0x00001f9c   0x00001f9c   0x00000080   Data   RO          242    .constdata          music.o
+    0x0000201c   0x0000201c   0x00000842   Data   RO          405    .constdata          st7735.o
+    0x0000285e   0x0000285e   0x00000002   PAD
+    0x00002860   0x00002860   0x00000020   Data   RO         1281    Region$$Table       anon$$obj.o
 
 
-    Execution Region ER_RW (Exec base: 0x20000000, Load base: 0x000026a8, Size: 0x000007dc, Max: 0xffffffff, ABSOLUTE, COMPRESSED[0x000000e4])
+    Execution Region ER_RW (Exec base: 0x20000000, Load base: 0x00002880, Size: 0x000007e4, Max: 0xffffffff, ABSOLUTE, COMPRESSED[0x000000e4])
 
     Exec Addr    Load Addr    Size         Type   Attr      Idx    E Section Name        Object
 
-    0x20000000   COMPRESSED   0x00000012   Data   RW           94    .data               lab5.o
-    0x20000012   COMPRESSED   0x00000002   PAD
-    0x20000014   COMPRESSED   0x00000790   Data   RW          237    .data               music.o
-    0x200007a4   COMPRESSED   0x0000002c   Data   RW          400    .data               st7735.o
-    0x200007d0   COMPRESSED   0x00000008   Data   RW          743    .data               texas.o
-    0x200007d8   COMPRESSED   0x00000004   Data   RW         1046    .data               motor.o
+    0x20000000   COMPRESSED   0x00000013   Data   RW           95    .data               lab5.o
+    0x20000013   COMPRESSED   0x00000001   PAD
+    0x20000014   COMPRESSED   0x00000790   Data   RW          243    .data               music.o
+    0x200007a4   COMPRESSED   0x0000002c   Data   RW          406    .data               st7735.o
+    0x200007d0   COMPRESSED   0x00000008   Data   RW          749    .data               texas.o
+    0x200007d8   COMPRESSED   0x00000008   Data   RW          967    .data               keypad.o
+    0x200007e0   COMPRESSED   0x00000004   Data   RW         1029    .data               motor.o
 
 
-    Execution Region ER_ZI (Exec base: 0x200007dc, Load base: 0x0000278c, Size: 0x00000464, Max: 0xffffffff, ABSOLUTE)
+    Execution Region ER_ZI (Exec base: 0x200007e4, Load base: 0x00002964, Size: 0x00000464, Max: 0xffffffff, ABSOLUTE)
 
     Exec Addr    Load Addr    Size         Type   Attr      Idx    E Section Name        Object
 
-    0x200007dc        -       0x00000060   Zero   RW         1170    .bss                c_w.l(libspace.o)
-    0x2000083c   0x0000278c   0x00000004   PAD
-    0x20000840        -       0x00000000   Zero   RW            2    HEAP                startup.o
-    0x20000840        -       0x00000400   Zero   RW            1    STACK               startup.o
+    0x200007e4        -       0x00000060   Zero   RW         1153    .bss                c_w.l(libspace.o)
+    0x20000844   0x00002964   0x00000004   PAD
+    0x20000848        -       0x00000000   Zero   RW            2    HEAP                startup.o
+    0x20000848        -       0x00000400   Zero   RW            1    STACK               startup.o
 
 
 ==============================================================================
@@ -1228,10 +1220,11 @@ Image component sizes
       Code (inc. data)   RO Data    RW Data    ZI Data      Debug   Object Name
 
        364         34          0          0          0       1438   dac.o
-       364         58         12          0          0       3619   keypad.o
-       872        210          0         18          0       7666   lab5.o
+       792         80          0          8          0       2977   keypad.o
+       900        216          0         19          0       8148   lab5.o
+        92         22          0          0          0        489   launchpad.o
        322         62          0          4          0       3464   motor.o
-      1170        226        128       1936          0       8999   music.o
+      1108        212        128       1936          0       7246   music.o
        124          4          0          0          0       5019   pll.o
        216         32          0          0          0       1034   pwm.o
       1778        200       2114         44          0      14917   st7735.o
@@ -1239,9 +1232,9 @@ Image component sizes
       1352        174          0          8          0       7038   texas.o
 
     ----------------------------------------------------------------------
-      7264       1632       2288       2012       1024      54270   Object Totals
+      7748       1668       2276       2020       1024      52846   Object Totals
          0          0         32          0          0          0   (incl. Generated)
-        10          0          2          2          0          0   (incl. Padding)
+         8          0          2          1          0          0   (incl. Padding)
 
     ----------------------------------------------------------------------
 
@@ -1288,15 +1281,15 @@ Image component sizes
 
       Code (inc. data)   RO Data    RW Data    ZI Data      Debug   
 
-      7608       1648       2288       2012       1124      51210   Grand Totals
-      7608       1648       2288        228       1124      51210   ELF Image Totals (compressed)
-      7608       1648       2288        228          0          0   ROM Totals
+      8092       1684       2276       2020       1124      50046   Grand Totals
+      8092       1684       2276        228       1124      50046   ELF Image Totals (compressed)
+      8092       1684       2276        228          0          0   ROM Totals
 
 ==============================================================================
 
-    Total RO  Size (Code + RO Data)                 9896 (   9.66kB)
-    Total RW  Size (RW Data + ZI Data)              3136 (   3.06kB)
-    Total ROM Size (Code + RO Data + RW Data)      10124 (   9.89kB)
+    Total RO  Size (Code + RO Data)                10368 (  10.13kB)
+    Total RW  Size (RW Data + ZI Data)              3144 (   3.07kB)
+    Total ROM Size (Code + RO Data + RW Data)      10596 (  10.35kB)
 
 ==============================================================================
 

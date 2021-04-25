@@ -44,28 +44,42 @@ uint8_t updateDisplayNeeded = 1;
 uint8_t clearScreenNeeded = 1;
 
 char key;
+uint8_t keyReady = 0;
 
+//==========================
+// Keypad helper functions
+//==========================
+
+// Called by keypad module, to transfer key to main
+void typeKey(char k){
+//	key = k;
+
+//	ST7735_SetCursor(cursor,8);
+//	ST7735_OutChar(k);
+//	
+//	cursor += 2;
+//	if (cursor == 15) cursor = 7;
+	
+	recordKey(k);
+}
+
+// Store key from keypad into variable in main
+void recordKey(char k){
+	key = k;
+	keyReady = 1;
+	updateDisplayNeeded = 1;
+}
+
+// Blocking, wait for key from keypad
+char scanKeypad(void){
+	while(keyReady == 0){}
+	keyReady = 0;
+	return key;
+}
 
 //==========================
 // Helper functions
 //==========================
-
-// Called by scan(), to be deleted
-void typeKey(char k){
-	 key = k;
-	
-	 ST7735_SetCursor(cursor,8);
-	 ST7735_OutChar(k);
-	
-	cursor += 2;
-	if (cursor == 15) cursor = 7;
-}
-
-
-void recordKey(char k){
-	key = k;
-	updateDisplayNeeded = 1;
-}
 
 void resetCode(char *c){
 	char *localCode = c;
@@ -242,9 +256,9 @@ int main(void) {
 		}
 		
 		else{
-			while(1);		// temporary to simulate blocking
-//			char enteredKey = scanKeypad();	//blocking
-//			processKey(enteredKey);
+			//while(1);		// temporary to simulate blocking
+			char enteredKey = scanKeypad();	//blocking
+			processKey(enteredKey);
 			updateDisplayNeeded = 1;
 		}
 		

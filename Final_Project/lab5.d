@@ -6,7 +6,6 @@
 .\lab5.o: ../inc/LaunchPad.h
 .\lab5.o: ../inc/ST7735.h
 .\lab5.o: ../inc/TExaS.h
-.\lab5.o: ../inc/PWM.h
 .\lab5.o: DAC.h
 .\lab5.o: Music.h
 .\lab5.o: Keypad.h
