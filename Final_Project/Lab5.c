@@ -13,7 +13,6 @@
 #include "../inc/LaunchPad.h"
 #include "../inc/ST7735.h"
 #include "../inc/TExaS.h" 
-#include "../inc/PWM.h" 
 
 #include "DAC.h"
 #include "Music.h" 
@@ -33,6 +32,7 @@
 #define UNLOCKED 1
 #define SET_CODE 2
 uint8_t state = LOCKED;
+uint8_t cursor = 7;
 
 char secretCode[] = {'1','2','3','4'};
 char newCode[] = {'1','2','3','4'};
@@ -44,29 +44,28 @@ uint8_t updateDisplayNeeded = 1;
 uint8_t clearScreenNeeded = 1;
 
 char key;
-uint8_t keypadDataReady = 0;
 
 
 //==========================
 // Helper functions
 //==========================
 
-// Called by keypad module to send key and set flag
+// Called by scan(), to be deleted
+void typeKey(char k){
+	 key = k;
+	
+	 ST7735_SetCursor(cursor,8);
+	 ST7735_OutChar(k);
+	
+	cursor += 2;
+	if (cursor == 15) cursor = 7;
+}
+
+
 void recordKey(char k){
 	key = k;
-	keypadDataReady = 1;
+	updateDisplayNeeded = 1;
 }
-
-// Blocking call used by main to wait for keypad input. Clears flag
-char readKeypad(void){
-	// wait/block until keypad input ready
-	while(!keypadDataReady){}
-	
-	char localKey = key;
-	keypadDataReady = 0;
-	return localKey;
-}
-
 
 void resetCode(char *c){
 	char *localCode = c;
@@ -208,6 +207,7 @@ int main(void) {
   PLL_Init(Bus80MHz);              // bus clock at 80 MHz
 	TExaS_Init(SCOPE_PD2,80000000); 	
 
+	LaunchPad_Init();
 	ST7735_InitR(INITR_REDTAB); 		 // init LCD
 	GPIOPortD_Init(); 							 // init DAC pin
 	DAC_Init(0x07FF); 							 // init DAC
@@ -216,11 +216,12 @@ int main(void) {
 	Motor_Init();
 	
 	Lockbox_Init();
+	GPIOPortB_Init(&typeKey);
 	
   EnableInterrupts();
 
   while(1){
-		Music_Play(); 								// test music (Wii Channel); comment out to turn off music
+//		Music_Play(); 								// test music (Wii Channel); comment out to turn off music
 		
     if(clearScreenNeeded){
 			ST7735_FillScreen(0);
@@ -241,9 +242,9 @@ int main(void) {
 		}
 		
 		else{
-			//while(1);		// temporary to simulate blocking
-			char enteredKey = readKeypad();	//blocking
-			processKey(enteredKey);
+			while(1);		// temporary to simulate blocking
+//			char enteredKey = scanKeypad();	//blocking
+//			processKey(enteredKey);
 			updateDisplayNeeded = 1;
 		}
 		

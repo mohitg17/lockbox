@@ -23,10 +23,10 @@
 // PB1 - row3
 // PB0 - row2
 
-void GPIOPortB_Init(void);
-void GPIOPortB_Handler(void);
-char scan(void);
+void GPIOPortB_Init(void(*typeKey)(char));
+//void GPIOPortB_Handler(void);
+//char scan(void);
 
-char scanKeypad(void);
+//char scanKeypad(void); // blocking call
 
 
