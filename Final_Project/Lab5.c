@@ -47,7 +47,7 @@ char key;
 uint8_t keyReady = 0;
 
 //==========================
-// Keypad helper functions
+// Keypad functions
 //==========================
 
 // Called by keypad module, to transfer key to main
@@ -120,6 +120,10 @@ uint8_t compareCodes(char *c1, char *c2){
 }
 
 void processKey(char enteredKey){
+	// turn off LEDs upon any key press
+	SetGreenLED(0);
+	SetRedLED(0);
+	
 	if(state == LOCKED){
 		// Record key
 		if(digitIndex < totalDigits){
@@ -137,14 +141,16 @@ void processKey(char enteredKey){
 				state = UNLOCKED;
 				clearScreenNeeded = 1;
 				
-				// play correct sound
+				// play correct sound/light
 				playGoodSong();
+				SetGreenLED(1);
 			}
 			
 			// incorrect submission
 			else{
-				// play incorrect sound
+				// play incorrect sound/light
 				playBadSong();
+				SetRedLED(1);
 			}
 			
 			resetCode(enteredCode);
