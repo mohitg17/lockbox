@@ -73,19 +73,19 @@ void Timer4A_Handler(void){
 }
 
 void Motor_Init(void){
-	GPIOPortC_Init();
+	//GPIOPortC_Init();
 	//Timer3A_Init();
-	PWM0G_Init(40000, 5000);					// 1000Hz, 50% duty cycle	; from Lec46 slides 
+	PWM0C_Init(50000, 1250);					// 1000Hz, 50% duty cycle	; from Lec46 slides 
 	
 }
 
 void Motor_Lock(void){
 	//Timer4Period = 39999;
-	PWM0G_Duty(5000);            	// output 
+	PWM0C_Duty(1250);            	// output 
 }
 
 void Motor_Unlock(void){
 	//Timer4Period = 199999;
-	PWM0G_Duty(1000);            	// output 
+	PWM0C_Duty(6250);            	// output 
 }
 

@@ -64,3 +64,16 @@ void PWM0G_Init(uint16_t period, uint16_t duty);
 // change duty cycle of PB6
 // duty is number of PWM clock cycles output is high  (2<=duty<=period-1)
 void PWM0G_Duty(uint16_t duty);
+
+// period is 16-bit number of PWM clock cycles in one period (3<=period)
+// period for PD1 and PD0 must be the same
+// duty is number of PWM clock cycles output is high  (2<=duty<=period-1)
+// PWM clock rate = processor clock rate/SYSCTL_RCC_PWMDIV
+//                = BusClock/2
+//                = 80 MHz/2 = 40 MHz (in this example)
+// Output on PD0/M0PWM6
+void PWM0C_Init(uint16_t period, uint16_t duty);
+
+// change duty cycle of PB6
+// duty is number of PWM clock cycles output is high  (2<=duty<=period-1)
+void PWM0C_Duty(uint16_t duty);

@@ -1,0 +1,16 @@
+Forward Design Changes Report
+-----------------------------
+
+Report File:        C:\Users\mohit\Documents\College\Spring_2021\EE_445L\Lab\FinalProject\final_project_ahl672_mg58629_zbt86_hrr592\Lab_7_ahl672_mg58629_zbt86_hrr592 (PCB - Forward Design Changes Report).txt
+Report Written:     Thursday, April 01, 2021
+Design Path:        C:\Users\mohit\Documents\College\Spring_2021\EE_445L\Lab\FinalProject\final_project_ahl672_mg58629_zbt86_hrr592\Lab_7_ahl672_mg58629_zbt86_hrr592.pcb
+Design Title:       
+Created:            1/29/2013 12:01:41 AM
+Last Saved:         4/1/2021 2:38:01 PM
+Editing Time:       10981 min
+Units:              mil (precision 0)
+
+The designs are the same, so no design changes to forward.
+
+
+End Of Report.

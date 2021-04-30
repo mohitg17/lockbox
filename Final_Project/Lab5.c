@@ -229,7 +229,7 @@ void drawSetCodeScreen(){
 
 void drawUnlockScreen(){
 	drawTitle();
-
+	SetGreenLED(1);
 	ST7735_DrawString(7,5,"Welcome!",ST7735_YELLOW);
 	ST7735_DrawString(4,8,"# = Lock",ST7735_YELLOW);
 	ST7735_DrawString(4,9,"* = Set Code",ST7735_YELLOW);
@@ -246,6 +246,7 @@ int main(void) {
 	TExaS_Init(SCOPE_PD2,80000000); 	
 
 	LaunchPad_Init();
+	LED_Init();
 	ST7735_InitR(INITR_REDTAB); 		 // init LCD
 	GPIOPortD_Init(); 							 // init DAC pin
 	DAC_Init(0x07FF); 							 // init DAC
@@ -259,7 +260,7 @@ int main(void) {
   EnableInterrupts();
 
   while(1){
-//		Music_Play(); 								// test music (Wii Channel); comment out to turn off music
+		// Music_Play(); 								// test music (Wii Channel); comment out to turn off music
 		
     if(clearScreenNeeded){
 			ST7735_FillScreen(0);
