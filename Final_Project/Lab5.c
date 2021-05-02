@@ -31,7 +31,7 @@
 #define LOCKED 0
 #define UNLOCKED 1
 #define SET_CODE 2
-uint8_t state = LOCKED;
+uint8_t state = UNLOCKED;
 uint8_t cursor = 7;
 
 char secretCode[] = {'1','2','3','4'};
@@ -97,6 +97,12 @@ void playBadSong(void){
 //==========================
 // Helper functions
 //==========================
+
+void setNewCode(char *c1, char *c2) {
+	for(uint8_t i = 0; i < 4; i++) {
+		c1[i] = c2[i];
+	}
+}
 
 void resetCode(char *c){
 	char *localCode = c;
@@ -184,6 +190,7 @@ void processKey(char enteredKey){
 		// Check if finished entering keys
 		if(digitIndex == totalDigits){
 			state = UNLOCKED;
+			setNewCode(secretCode, newCode);
 			digitIndex = 0;
 			clearScreenNeeded = 1;
 		}
